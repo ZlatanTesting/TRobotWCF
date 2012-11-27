@@ -2,12 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using TRobotWCFServiceLibrary.Messages;
 
 namespace TRobotWCFServiceLibrary.DataReceivers
 {
-    interface IDataReceiver
-    {
-        Data ReceiveData();
-    }
+    public enum DataReceiver
+    {  
+        Battery,
+        GPS,
+        Hokuyo,
+        IMU,
+        Sharp,
+        Ultrasonic
+    };
 }

@@ -5,7 +5,8 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
 using System.Threading;
-using TRobotWCFServiceLibrary.Message;
+using TRobotWCFServiceLibrary.Messages;
+using TRobotWCFServiceLibrary.DataReceivers;
 
 namespace TRobotWCFServiceLibrary
 {
@@ -20,7 +21,11 @@ namespace TRobotWCFServiceLibrary
 
         public Data LoadData(Data request)
         {
-            Data response = new Data();
+            DataReceiverFactory dataReceiverFactory = new DataReceiverFactory();
+
+            IDataReceiver dataReceiver = dataReceiverFactory.GetDataReceiver(request.DataReceiverType);
+
+            Data response = dataReceiver.ReceiveData();
 
             return response;
         }

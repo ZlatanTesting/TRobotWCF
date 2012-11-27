@@ -44,6 +44,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataReceivers\BatteryDataReceiver.cs" />
+    <Compile Include="DataReceivers\DataReceiverEnum.cs" />
+    <Compile Include="DataReceivers\DataReceiverFactory.cs" />
     <Compile Include="DataReceivers\GPSDataReceiver.cs" />
     <Compile Include="DataReceivers\HokuyoSensorDataReceiver.cs" />
     <Compile Include="DataReceivers\IDataReceiver.cs" />
@@ -51,7 +53,7 @@
     <Compile Include="DataReceivers\SharpSensorDataReceiver.cs" />
     <Compile Include="DataReceivers\UltrasonicSensorDataReceiver.cs" />
     <Compile Include="IService1.cs" />
-    <Compile Include="Message\Data.cs" />
+    <Compile Include="Messages\Data.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service1.cs" />
   </ItemGroup>

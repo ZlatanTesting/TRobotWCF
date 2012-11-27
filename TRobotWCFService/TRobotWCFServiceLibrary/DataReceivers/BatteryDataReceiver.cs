@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using TRobotWCFServiceLibrary.Message;
+using TRobotWCFServiceLibrary.Messages;
 
 namespace TRobotWCFServiceLibrary.DataReceivers
 {
