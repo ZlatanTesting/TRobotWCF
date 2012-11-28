@@ -8,9 +8,17 @@ namespace TRobotWCFServiceLibrary.DataReceivers
 {
     class BatteryDataReceiver:IDataReceiver
     {
+        /// <summary> 
+        /// This is mock method. This method always returns 70%.
+        /// The key for charge value is 'charge'.
+        /// </summary>
         public Data ReceiveData()
         {
-            throw new NotImplementedException();
+            Data data = new Data();
+
+            data.Dictionary.Add("charge", 70);
+            
+            return data;
         }
     }
 }

@@ -8,9 +8,18 @@ namespace TRobotWCFServiceLibrary.DataReceivers
 {
     class UltrasonicSensorDataReceiver:IDataReceiver
     {
+        /// <summary> 
+        /// This is mock method. This method always returns 200cm.
+        /// Range for this sensor is (5 - 350 cm).
+        /// The key for measured distance is 'distance'.
+        /// </summary>
         public Data ReceiveData()
         {
-            throw new NotImplementedException();
+            Data data = new Data();
+
+            data.Dictionary.Add("distance", 200);
+
+            return data;
         }
     }
 }

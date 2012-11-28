@@ -8,9 +8,18 @@ namespace TRobotWCFServiceLibrary.DataReceivers
 {
     class GPSDataReceiver:IDataReceiver
     {
+        /// <summary> 
+        /// This is mock method. This method always returns latitude = 50.2849835 and longitude = 18.6717034.
+        /// The key for latitude is 'latitude' and for longitude is 'longitude'.
+        /// </summary>
         public Data ReceiveData()
         {
-            throw new NotImplementedException();
+            Data data = new Data();
+
+            data.Dictionary.Add("latitude", 50.2849835);
+            data.Dictionary.Add("longitude", 18.6717034);
+
+            return data;
         }
     }
 }
