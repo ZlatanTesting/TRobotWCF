@@ -1,0 +1,106 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>UrgCtrl</name>
+    </assembly>
+    <members>
+        <member name="T:UrgCtrl.UrgCtrl">
+            <summary>
+            Class to control Hokuyo URG-04LX laser sensor.
+            </summary>
+        </member>
+        <member name="M:UrgCtrl.UrgCtrl.#ctor">
+            <summary>
+            Class to control Hokuyo URG-04LX laser sensor.
+            </summary>
+        </member>
+        <member name="M:UrgCtrl.UrgCtrl.what">
+            <summary>
+            To send error message when there is no connection.
+            </summary>
+            <returns>error message = "no connection".(string)</returns>
+        </member>
+        <member name="M:UrgCtrl.UrgCtrl.Connect(System.Int32,System.Int32)">
+            <summary>
+            To connect to Hokuyo sensor.
+            </summary>
+            <param name="ComPort">The Com Port connected to Hokuyo sensor. (int)</param>
+            <param name="baudrate">Baudrate for communication between sensor and computer,3 baudrate 
+            available: 19200, 57600 and 115200, the default baudrate for Hokuyo URG-04LX is 19200. (int)</param>
+            <returns></returns>
+        </member>
+        <member name="M:UrgCtrl.UrgCtrl.Disconnect">
+            <summary>
+            To disconnect from Hokuyo sensor.
+            </summary>
+        </member>
+        <member name="M:UrgCtrl.UrgCtrl.IsConnected">
+            <summary>
+            To check connection status.
+            </summary>
+            <returns>Return true if connected, return false if no connected. (bool)</returns>
+        </member>
+        <member name="M:UrgCtrl.UrgCtrl.GetVersionInformation">
+            <summary>
+            To get version information for Hokuyo sensor.
+            </summary>
+            <returns>Return sensor version details such as serial number, firmware version in 6 lines.For example: 
+            Line 1 = V V [LF] 0 0 P [LF], 
+            line 2 = VEND: Hokuyo Automatic Co., Ltd;,
+            line 3 = PROD: SOKUIKI Sensor URG-04LX;,
+            line 4 = FIRM: 3.0.00, 06/10/05;
+            line 5 = PROT: SCIP 2.0;,
+            line 6 = SERI: H0508486;. 
+            (string)</returns>
+        </member>
+        <member name="M:UrgCtrl.UrgCtrl.Capture(System.Int32[])">
+            <summary>
+            To capture data from Hokuyo sensor. 
+            </summary>
+            <param name="data">Data array return from Hokuyo sensor.
+            User need to specify an array for the function to modify. For example:
+            int[] data = new int[MaxBufferSize].(int)</param>
+            <returns>Length of data array. (int)</returns>
+        </member>
+        <member name="M:UrgCtrl.UrgCtrl.GetTimestamp">
+            <summary>
+            The time stamp from Hokuyo sensor.
+            </summary>
+            <returns>Time stamp from Hokuyo sensor. (int)</returns>
+        </member>
+        <member name="M:UrgCtrl.UrgCtrl.Index2Radian(System.Int32)">
+            <summary>
+            To convert the data received from Hokuyo from index to radian. 
+            </summary>
+            <param name="index">The index to convert to radian, 0-725.(int)</param>
+            <returns>Radian after convert.(double)</returns>
+        </member>
+        <member name="M:UrgCtrl.UrgCtrl.Radian2Index(System.Double)">
+            <summary>
+            To convert the data received from Hokuyo from radian to index. 
+            </summary>
+            <param name="radian">The radian to convert to index, -2.09 to 2.09. (double)</param>
+            <returns>The index after convert.(int)</returns>
+        </member>
+        <member name="P:UrgCtrl.UrgCtrl.MinDistance">
+            <summary>
+            The minimum detection range of Hokuyo sensor in mm. (int)
+            </summary>
+        </member>
+        <member name="P:UrgCtrl.UrgCtrl.MaxDistance">
+            <summary>
+            The maximun detection range of Hokuyo sensor in mm. (int)
+            </summary>
+        </member>
+        <member name="P:UrgCtrl.UrgCtrl.MaxBufferSize">
+            <summary>
+            The maximum buffer size of Hokuyo data. (int)
+            </summary>
+        </member>
+        <member name="P:UrgCtrl.UrgCtrl.ScanMsec">
+            <summary>
+            The standard scan speed of Hokuyo sensor in msec. (int)
+            </summary>
+        </member>
+    </members>
+</doc>
