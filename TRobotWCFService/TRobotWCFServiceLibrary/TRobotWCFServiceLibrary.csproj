@@ -43,17 +43,18 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataProvider\DriversDataProvider.cs" />
+    <Compile Include="DataProvider\EncoderDataProvider.cs" />
     <Compile Include="DataProvider\IDataProvider.cs" />
     <Compile Include="DataReceivers\BatteryDataReceiver.cs" />
     <Compile Include="DataReceivers\DataReceiverEnum.cs" />
     <Compile Include="DataReceivers\DataReceiverFactory.cs" />
+    <Compile Include="DataReceivers\EncoderDataReceiver.cs" />
     <Compile Include="DataReceivers\GPSDataReceiver.cs" />
     <Compile Include="DataReceivers\HokuyoSensorDataReceiver.cs" />
     <Compile Include="DataReceivers\IDataReceiver.cs" />
     <Compile Include="DataReceivers\IMUOrientationModuleDataReceiver.cs" />
     <Compile Include="DataReceivers\SharpSensorDataReceiver.cs" />
-    <Compile Include="DataReceivers\UltrasonicSensorDataReceiver.cs" />
+    <Compile Include="DataReceivers\MobotSensorDataReceiver.cs" />
     <Compile Include="IService1.cs" />
     <Compile Include="Messages\Data.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

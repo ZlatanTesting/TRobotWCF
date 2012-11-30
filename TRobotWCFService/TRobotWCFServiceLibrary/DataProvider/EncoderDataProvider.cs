@@ -6,11 +6,11 @@ using TRobotWCFServiceLibrary.Messages;
 
 namespace TRobotWCFServiceLibrary.DataProvider
 {
-    class DriversDataProvider:IDataProvider
+    class EncoderDataProvider:IDataProvider
     {
         private Data driversData;
 
-        public DriversDataProvider(Data driversData) 
+        public EncoderDataProvider(Data driversData) 
         {
             this.driversData = driversData;
         }

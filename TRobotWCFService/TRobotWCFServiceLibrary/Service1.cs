@@ -15,7 +15,7 @@ namespace TRobotWCFServiceLibrary
     {
         public bool SendData(Data data)
         {
-            IDataProvider dataProvider = new DriversDataProvider(data);
+            IDataProvider dataProvider = new EncoderDataProvider(data);
 
             bool response = dataProvider.ProvideData();
 

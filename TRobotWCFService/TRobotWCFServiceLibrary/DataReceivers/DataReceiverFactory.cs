@@ -31,9 +31,13 @@ namespace TRobotWCFServiceLibrary.DataReceivers
                     {
                         return new SharpSensorDataReceiver();
                     }
-                case DataReceiver.Ultrasonic:
+                case DataReceiver.Mobot:
                     {
-                        return new UltrasonicSensorDataReceiver();
+                        return new MobotSensorDataReceiver();
+                    }
+                case DataReceiver.Encoder:
+                    {
+                        return new EncoderDataReceiver();
                     }
                 default:
                     {

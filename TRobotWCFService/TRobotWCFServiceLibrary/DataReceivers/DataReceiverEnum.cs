@@ -12,6 +12,7 @@ namespace TRobotWCFServiceLibrary.DataReceivers
         Hokuyo,
         IMU,
         Sharp,
-        Ultrasonic
+        Mobot,
+        Encoder
     };
 }
