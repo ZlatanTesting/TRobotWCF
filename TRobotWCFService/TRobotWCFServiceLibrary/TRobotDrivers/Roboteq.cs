@@ -5,7 +5,7 @@ using System.Text;
 using System.IO;
 using System.IO.Ports;
 
-namespace KPKM.TrobotExplorer.Driver
+namespace TRobotWCFServiceLibrary.TRobotDrivers
 {
     public class Roboteq
     {
@@ -20,54 +20,35 @@ namespace KPKM.TrobotExplorer.Driver
         {
             baudRate = 115200;
             this.comPortName = comPortName;
-            Open();
         }
 
-        public bool IsSerialPortOpen()
+        public void Connect()
         {
-            return serialPort.IsOpen;
-        }
+            if (serialPort != null)
+            {
+                Disconnect();
+            }
 
-        private void Open()
-        {
-                 Close();
+            serialPort = new SerialPort(comPortName, baudRate, Parity.None, 8, StopBits.One);
+            serialPort.Handshake = Handshake.None;
+            serialPort.Encoding = Encoding.ASCII;
+            serialPort.NewLine = "\r";
+            serialPort.ReadTimeout = 1100;
 
-                 serialPort = new SerialPort(comPortName, baudRate, Parity.None, 8, StopBits.One);
-                 serialPort.Handshake = Handshake.None;
-                 serialPort.Encoding = Encoding.ASCII;
-                 serialPort.NewLine = "\r";
-                 serialPort.ReadTimeout = 1100;
-
-                 try
-                 {
-                     serialPort.Open();
-                  
-                     driveInit();
-                 }
-                 catch(Exception ex)
-                 {
-                     Console.WriteLine(ex.Message + "\n\n" + ex.StackTrace);
-                 }
-
-        }
-
-        public void Reconnect()
-        {
             try
             {
-                if (!serialPort.IsOpen)
-                {
-                    serialPort.Open();
-                }
-                    driveInit();
+                serialPort.Open();
+
+                driveInit();
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message + "\n\n" + ex.StackTrace);
             }
+
         }
 
-        public void Close()
+        public void Disconnect()
         {
             if (serialPort.IsOpen)
             {
@@ -75,11 +56,18 @@ namespace KPKM.TrobotExplorer.Driver
             }
         }
 
-
+        public bool IsSerialPortOpen()
+        {
+            return serialPort.IsOpen;
+        }
 
         public void SetPower(float leftWheel, float rightWheel)
         {
-            WriteOperation(WriteOperationType.RuntimeCommand, "M", (int)(leftWheel * 1000), (int)(rightWheel*1000));
+            List<int> wheelPowers = new List<int>();
+            wheelPowers.Add((int)(leftWheel * 1000));
+            wheelPowers.Add((int)(rightWheel*1000));
+
+            WriteOperation(WriteOperationType.RuntimeCommand, "M", wheelPowers);
         }
         
         public void DrivePulses(float speed)
@@ -96,6 +84,25 @@ namespace KPKM.TrobotExplorer.Driver
         }
 
         /// <summary>
+        /// Returns speed in RPM.
+        /// </summary>
+        public String[] GetSpeed()
+        {
+            return WriteOperation(WriteOperationType.RuntimeQuery, "S");
+        }
+
+        /// <summary>
+        /// Returns volts*10.
+        /// </summary>
+        public String[] GetBatteryVoltage()
+        {
+            List<int> channelNumber = new List<int>();
+            channelNumber.Add(2);
+
+            return WriteOperation(WriteOperationType.RuntimeQuery, "V", channelNumber);
+        }
+
+        /// <summary>
         /// Send specified command to Roboteq device. 
         /// Refer to Roboteq datasheet for a full list of available commands and their arguments.
         /// </summary>
@@ -107,71 +114,72 @@ namespace KPKM.TrobotExplorer.Driver
         {
             if (!serialPort.IsOpen)
             { 
-                Reconnect(); 
+                Connect();
             }
 
-                string prefix = "";
+            string prefix = "";
 
-                switch (opType)
+            switch (opType)
+            {
+                case WriteOperationType.RuntimeCommand:
+                    prefix = "!";
+                    break;
+                case WriteOperationType.RuntimeQuery:
+                    prefix = "?";
+                    break;
+                case WriteOperationType.GetConfig:
+                    prefix = "~";
+                    break;
+                case WriteOperationType.SetConfig:
+                    prefix = "^";
+                    break;
+            }
+
+            string command = prefix + commandName;
+
+            foreach (int argument in arguments)
+            {
+                string temp = Convert.ToString(argument);
+                command += (" " + temp);
+            }
+
+            command += "\r";
+            serialPort.DiscardInBuffer();
+
+            serialPort.Write(command);
+            System.Threading.Thread.Sleep(15);
+
+            string response = "";
+
+            try
+            {
+                response = serialPort.ReadLine();
+                    
+                while (response.Length == 0)
                 {
-                    case WriteOperationType.RuntimeCommand:
-                        prefix = "!";
-                        break;
-                    case WriteOperationType.RuntimeQuery:
-                        prefix = "?";
-                        break;
-                    case WriteOperationType.GetConfig:
-                        prefix = "~";
-                        break;
-                    case WriteOperationType.SetConfig:
-                        prefix = "^";
-                        break;
+                    System.Threading.Thread.Sleep(10);
+                    response = serialPort.ReadLine();
                 }
+            }
+            catch
+            {
+                Connect();
+            }
 
-                string command = prefix + commandName;
-
-                foreach (int argument in arguments)
+            if ((opType == WriteOperationType.RuntimeQuery) || (opType == WriteOperationType.GetConfig))
+            {
+                if (response.Contains("+"))
                 {
-                    string temp = Convert.ToString(argument);
-                    command += (" " + temp);
+                    response = serialPort.ReadLine();
                 }
-
-                command += "\r";
-                serialPort.DiscardInBuffer();
-
-                serialPort.Write(command);
-                System.Threading.Thread.Sleep(15);
-
-                string response = "";
-
-                try
-                {
-                     response = serialPort.ReadLine();
-                    while (response.Length == 0)
-                    {
-                        System.Threading.Thread.Sleep(10);
-                        response = serialPort.ReadLine();
-                    }
-                }
-                catch
-                {
-                    Open();
-                }
-
-                if ((opType == WriteOperationType.RuntimeQuery) || (opType == WriteOperationType.GetConfig))
-                {
-                    if (response.Contains("+"))
-                    {
-                        response = serialPort.ReadLine();
-                    }
-                    int pos = response.IndexOf("=");
-                    string reply = response.Substring(pos + 1);
-                    return reply.Split(':');
-                }
-                else
-                {
-                    return null;
-                }
+                int pos = response.IndexOf("=");
+                string reply = response.Substring(pos + 1);
+                return reply.Split(':');
+            }
+            else
+            {
+                return null;
+            }
         }
 
         /// <summary>
@@ -215,16 +223,14 @@ namespace KPKM.TrobotExplorer.Driver
         /// <returns>Response form motor controller in form of string array, or null if there was no reply.</returns>
         private string[] WriteOperation(WriteOperationType opType, string commandName)
         {
-
             List<int> args = new List<int>();
             return WriteOperation(opType, commandName, args);
         }
 
-
         private void driveInit()
         {
-          WriteOperation(WriteOperationType.SetConfig, "MMOD", 1, 0);
-          WriteOperation(WriteOperationType.SetConfig, "MMOD", 2, 0);  
+            WriteOperation(WriteOperationType.SetConfig, "MMOD", 1, 0);
+            WriteOperation(WriteOperationType.SetConfig, "MMOD", 2, 0);  
         	
             // turn off command echo
             WriteOperation(WriteOperationType.SetConfig, "ECHOF", 1);
@@ -248,22 +254,16 @@ namespace KPKM.TrobotExplorer.Driver
             WriteOperation(WriteOperationType.RuntimeCommand, "DC", 2, _deceleration);
 
             // disable integral tracking error
-           WriteOperation(WriteOperationType.SetConfig, "CLERD", 1, 0);
-           WriteOperation(WriteOperationType.SetConfig, "CLERD", 2, 0);
-
+            WriteOperation(WriteOperationType.SetConfig, "CLERD", 1, 0);
+            WriteOperation(WriteOperationType.SetConfig, "CLERD", 2, 0);
         }
 
+        private enum WriteOperationType
+        {
+            RuntimeCommand,
+            RuntimeQuery,
+            SetConfig,
+            GetConfig,
+        };
     }
-
-    public enum WriteOperationType
-    {
-        RuntimeCommand,
-        RuntimeQuery,
-        SetConfig,
-        GetConfig,
-    };
-    
 }
-
-
-
