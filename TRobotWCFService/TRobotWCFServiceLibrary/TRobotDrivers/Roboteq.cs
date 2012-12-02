@@ -65,22 +65,22 @@ namespace TRobotWCFServiceLibrary.TRobotDrivers
         {
             List<int> wheelPowers = new List<int>();
             wheelPowers.Add((int)(leftWheel * 1000));
-            wheelPowers.Add((int)(rightWheel*1000));
+            wheelPowers.Add((int)(rightWheel * 1000));
 
             WriteOperation(WriteOperationType.RuntimeCommand, "M", wheelPowers);
         }
         
-        public void DrivePulses(float speed)
+        public void DrivePulses(int leftWheel, int rightWheel)
         {
         	//WriteOperation(WriteOperationType.SetConfig, "MVEL", 1, (int)(speed*115));
          //   WriteOperation(WriteOperationType.SetConfig, "MVEL", 2, (int)(speed*115));
             
             
          WriteOperation(WriteOperationType.SetConfig, "MMOD", 1, 1);
-         WriteOperation(WriteOperationType.SetConfig, "MMOD", 2, 1);   
-         
-         WriteOperation(WriteOperationType.RuntimeCommand, "G", 1, (int)(speed*1000));
-         WriteOperation(WriteOperationType.RuntimeCommand, "G", 2, (int)(speed*1000));
+         WriteOperation(WriteOperationType.SetConfig, "MMOD", 2, 1);
+
+         WriteOperation(WriteOperationType.RuntimeCommand, "G", 1, (int)(leftWheel * 10));
+         WriteOperation(WriteOperationType.RuntimeCommand, "G", 2, (int)(rightWheel * 10));
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace TRobotWCFServiceLibrary.TRobotDrivers
         /// </summary>
         public String[] GetSpeed()
         {
-            return WriteOperation(WriteOperationType.RuntimeQuery, "S");
+            return WriteOperation(WriteOperationType.RuntimeQuery, "S", 0);
         }
 
         /// <summary>
