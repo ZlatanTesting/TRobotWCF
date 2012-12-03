@@ -61,7 +61,7 @@ namespace TRobotWCFServiceLibrary.TRobotDrivers
             return serialPort.IsOpen;
         }
 
-        public void SetPower(float leftWheel, float rightWheel)
+        public void SetPower(double leftWheel, double rightWheel)
         {
             List<int> wheelPowers = new List<int>();
             wheelPowers.Add((int)(leftWheel * 1000));
@@ -69,31 +69,38 @@ namespace TRobotWCFServiceLibrary.TRobotDrivers
 
             WriteOperation(WriteOperationType.RuntimeCommand, "M", wheelPowers);
         }
-        
-        public void DrivePulses(int leftWheel, int rightWheel)
-        {
-        	//WriteOperation(WriteOperationType.SetConfig, "MVEL", 1, (int)(speed*115));
-         //   WriteOperation(WriteOperationType.SetConfig, "MVEL", 2, (int)(speed*115));
-            
-            
-         WriteOperation(WriteOperationType.SetConfig, "MMOD", 1, 1);
-         WriteOperation(WriteOperationType.SetConfig, "MMOD", 2, 1);
 
-         WriteOperation(WriteOperationType.RuntimeCommand, "G", 1, (int)(leftWheel * 10));
-         WriteOperation(WriteOperationType.RuntimeCommand, "G", 2, (int)(rightWheel * 10));
+        /// <summary>
+        /// Sets power of motors.
+        /// </summary>
+        /// <param name="leftWheel">Left wheel power in percents.</param>
+        /// <param name="rightWheel">Right wheel power in percents.</param>
+        public void SetDriverSpeed(int leftWheel, int rightWheel)
+        {
+            //WriteOperation(WriteOperationType.SetConfig, "MVEL", 1, (int)(speed*115));
+            //WriteOperation(WriteOperationType.SetConfig, "MVEL", 2, (int)(speed*115));
+            
+            
+            //WriteOperation(WriteOperationType.SetConfig, "MMOD", 1, 1);
+            //WriteOperation(WriteOperationType.SetConfig, "MMOD", 2, 1);
+
+            WriteOperation(WriteOperationType.RuntimeCommand, "G", 0, (int)(leftWheel * 10));
+            WriteOperation(WriteOperationType.RuntimeCommand, "G", 2, (int)(rightWheel * 10));
         }
 
         /// <summary>
         /// Returns speed in RPM.
         /// </summary>
+        /// <returns>Speed in RPM.</returns>
         public String[] GetSpeed()
         {
             return WriteOperation(WriteOperationType.RuntimeQuery, "S", 0);
         }
 
         /// <summary>
-        /// Returns volts*10.
+        /// Returns volts * 10.
         /// </summary>
+        /// <returns>Volts * 10</returns>
         public String[] GetBatteryVoltage()
         {
             List<int> channelNumber = new List<int>();
@@ -143,41 +150,29 @@ namespace TRobotWCFServiceLibrary.TRobotDrivers
                 command += (" " + temp);
             }
 
-            command += "\r";
-            serialPort.DiscardInBuffer();
+            ClearSerialPortBuffer();
 
-            serialPort.Write(command);
-            System.Threading.Thread.Sleep(15);
+            serialPort.WriteLine(command);
 
-            string response = "";
-
-            try
+            if ((opType == WriteOperationType.RuntimeQuery) || (opType == WriteOperationType.GetConfig))
             {
-                response = serialPort.ReadLine();
-                    
+                string response = "";
+
                 while (response.Length == 0)
                 {
                     System.Threading.Thread.Sleep(10);
                     response = serialPort.ReadLine();
                 }
-            }
-            catch
-            {
-                Connect();
-            }
 
-            if ((opType == WriteOperationType.RuntimeQuery) || (opType == WriteOperationType.GetConfig))
-            {
-                if (response.Contains("+"))
-                {
-                    response = serialPort.ReadLine();
-                }
+                ClearSerialPortBuffer();
+
                 int pos = response.IndexOf("=");
                 string reply = response.Substring(pos + 1);
                 return reply.Split(':');
             }
             else
             {
+                ClearSerialPortBuffer();
                 return null;
             }
         }
@@ -227,10 +222,18 @@ namespace TRobotWCFServiceLibrary.TRobotDrivers
             return WriteOperation(opType, commandName, args);
         }
 
+        private void ClearSerialPortBuffer()
+        {
+            serialPort.DiscardInBuffer();
+            serialPort.DiscardOutBuffer();
+            //serialPort.Write("# C");
+        }
+
         private void driveInit()
         {
-            WriteOperation(WriteOperationType.SetConfig, "MMOD", 1, 0);
-            WriteOperation(WriteOperationType.SetConfig, "MMOD", 2, 0);  
+            // All motors in open-loop speed - default
+            WriteOperation(WriteOperationType.SetConfig, "MMOD", 1, 1);
+            WriteOperation(WriteOperationType.SetConfig, "MMOD", 2, 1);  
         	
             // turn off command echo
             WriteOperation(WriteOperationType.SetConfig, "ECHOF", 1);
@@ -248,10 +251,10 @@ namespace TRobotWCFServiceLibrary.TRobotDrivers
             WriteOperation(WriteOperationType.SetConfig, "RWD", 1000, 1000);
 
             //set acceleration and deceleration
-            WriteOperation(WriteOperationType.RuntimeCommand, "AC", 1, _acceleration);
-            WriteOperation(WriteOperationType.RuntimeCommand, "AC", 2, _acceleration);
-            WriteOperation(WriteOperationType.RuntimeCommand, "DC", 1, _deceleration);
-            WriteOperation(WriteOperationType.RuntimeCommand, "DC", 2, _deceleration);
+            //WriteOperation(WriteOperationType.RuntimeCommand, "AC", 1, _acceleration);
+            //WriteOperation(WriteOperationType.RuntimeCommand, "AC", 2, _acceleration);
+            //WriteOperation(WriteOperationType.RuntimeCommand, "DC", 1, _deceleration);
+            //WriteOperation(WriteOperationType.RuntimeCommand, "DC", 2, _deceleration);
 
             // disable integral tracking error
             WriteOperation(WriteOperationType.SetConfig, "CLERD", 1, 0);

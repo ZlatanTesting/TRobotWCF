@@ -22,7 +22,7 @@ namespace TRobotWCFServiceLibrary.DataProvider
         {
             try
             {
-                roboteQ.DrivePulses((int)driversData.Dictionary["leftWheel"], (int)driversData.Dictionary["rightWheel"]);
+                roboteQ.SetDriverSpeed((int)driversData.Dictionary["leftWheel"], (int)driversData.Dictionary["rightWheel"]);
                 return true;
             }
             catch (Exception)
