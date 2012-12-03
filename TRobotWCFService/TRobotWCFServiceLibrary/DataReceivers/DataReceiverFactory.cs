@@ -9,10 +9,12 @@ namespace TRobotWCFServiceLibrary.DataReceivers
     class DataReceiverFactory
     {
         private Roboteq roboteQ;
+        private Hokuyo hokuyo;
 
-        public DataReceiverFactory(Roboteq roboteQ)
+        public DataReceiverFactory(Roboteq roboteQ, Hokuyo hokuyo)
         {
             this.roboteQ = roboteQ;
+            this.hokuyo = hokuyo;
         }
 
         public IDataReceiver GetDataReceiver(DataReceiver dataReceiver)
@@ -29,7 +31,7 @@ namespace TRobotWCFServiceLibrary.DataReceivers
                     }
                 case DataReceiver.Hokuyo:
                     {
-                        return new HokuyoSensorDataReceiver();
+                        return new HokuyoSensorDataReceiver(hokuyo);
                     }
                 case DataReceiver.IMU:
                     {

@@ -14,11 +14,24 @@ namespace TRobotWCFServiceLibrary
 {
     public class Service1 : IService1
     {
-        private Roboteq roboteQ = new Roboteq("COM9");
+        private DataReceiverFactory dataReceiverFactory;
+        private Roboteq roboteQ;
+        private Hokuyo hokuyo;
+
+        private int roboteQBaudRate = 115200;
+        private string roboteQComPort = "COM9";
+        private int hokuyoBaudRate = 19200;
+        private string hokuyoComPort = "COM7";
+
 
         public Service1()
         {
+            roboteQ = new Roboteq(roboteQComPort, roboteQBaudRate);
             roboteQ.Connect();
+            hokuyo = new Hokuyo(hokuyoComPort, hokuyoBaudRate);
+            hokuyo.Connect();
+
+            dataReceiverFactory = new DataReceiverFactory(roboteQ, hokuyo);
         }
 
         public bool SendData(Data data)
@@ -32,8 +45,6 @@ namespace TRobotWCFServiceLibrary
 
         public Data LoadData(Data request)
         {
-            DataReceiverFactory dataReceiverFactory = new DataReceiverFactory(roboteQ);
-
             IDataReceiver dataReceiver = dataReceiverFactory.GetDataReceiver(request.DataReceiverType);
 
             Data response = dataReceiver.ReceiveData();

@@ -17,7 +17,7 @@ namespace TRobotWCFServiceLibrary.DataReceivers
         }
 
         /// <summary> 
-        /// This method always returns charge of battery in percents.
+        /// This method returns charge of battery in percents.
         /// The key for charge value is 'charge'.
         /// </summary>
         public Data ReceiveData()

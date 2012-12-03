@@ -16,9 +16,9 @@ namespace TRobotWCFServiceLibrary.TRobotDrivers
 	    private int _acceleration = 30; 
 	    private int _deceleration = 100;
 
-        public Roboteq(String comPortName)
+        public Roboteq(String comPortName, int baudRate)
         {
-            baudRate = 115200;
+            this.baudRate = baudRate;
             this.comPortName = comPortName;
         }
 
