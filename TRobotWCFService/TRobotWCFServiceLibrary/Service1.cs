@@ -21,7 +21,7 @@ namespace TRobotWCFServiceLibrary
         private int roboteQBaudRate = 115200;
         private string roboteQComPort = "COM9";
         private int hokuyoBaudRate = 19200;
-        private string hokuyoComPort = "COM7";
+        private string hokuyoComPort = "COM8";
 
 
         public Service1()

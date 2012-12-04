@@ -33,7 +33,7 @@ namespace TRobotWCFServiceLibrary.DataReceivers
             for (int i = 0; i < numberOfDistanceValues; i++)
             {
                 String key = "distance" + i;
-                data.Dictionary.Add("key", distanceValuesFromHokuyo[i]);
+                data.Dictionary.Add(key, distanceValuesFromHokuyo[i]);
             }
 
             return data;

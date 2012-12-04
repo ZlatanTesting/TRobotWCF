@@ -17,7 +17,7 @@ namespace TRobotWCFServiceLibrary.TRobotDrivers
         {
             hokuyo = new UrgCtrl.UrgCtrl();
             this.baudRate = baudRate;
-            this.comPort = comPort.Last();
+            this.comPort = int.Parse(comPort.Substring(comPort.Count()-1,1));
         }
 
         public bool Connect()
