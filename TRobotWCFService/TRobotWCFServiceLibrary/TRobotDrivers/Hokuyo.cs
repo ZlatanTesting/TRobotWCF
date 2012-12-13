@@ -22,12 +22,19 @@ namespace TRobotWCFServiceLibrary.TRobotDrivers
 
         public bool Connect()
         {
-            return hokuyo.Connect(comPort, baudRate);
+            if (!hokuyo.IsConnected())
+            {
+                return hokuyo.Connect(comPort, baudRate);
+            }
+            return true;
         }
 
         public void Disconnect()
         {
-            hokuyo.Disconnect();
+            if (hokuyo.IsConnected())
+            {
+                hokuyo.Disconnect();
+            }
         }
 
         public int[] GetData()

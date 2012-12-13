@@ -26,10 +26,7 @@ namespace TRobotWCFServiceLibrary
 
         public Service1()
         {
-            roboteQ = new Roboteq(roboteQComPort, roboteQBaudRate);
-            roboteQ.Connect();
-            hokuyo = new Hokuyo(hokuyoComPort, hokuyoBaudRate);
-            hokuyo.Connect();
+            ConnectAllDevices();
 
             dataReceiverFactory = new DataReceiverFactory(roboteQ, hokuyo);
         }
@@ -40,6 +37,8 @@ namespace TRobotWCFServiceLibrary
 
             bool response = dataProvider.ProvideData();
 
+            DisconnectAllDevices();
+
             return response;
         }
 
@@ -49,7 +48,23 @@ namespace TRobotWCFServiceLibrary
 
             Data response = dataReceiver.ReceiveData();
 
+            DisconnectAllDevices();
+
             return response;
+        }
+
+        private void ConnectAllDevices()
+        {
+            roboteQ = new Roboteq(roboteQComPort, roboteQBaudRate);
+            roboteQ.Connect();
+            hokuyo = new Hokuyo(hokuyoComPort, hokuyoBaudRate);
+            hokuyo.Connect();
+        }
+
+        private void DisconnectAllDevices()
+        {
+            roboteQ.Disconnect();
+            hokuyo.Disconnect();
         }
     }
 }
