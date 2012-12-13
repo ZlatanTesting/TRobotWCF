@@ -65,11 +65,6 @@
     <Compile Include="TRobotDrivers\Hokuyo.cs" />
     <Compile Include="TRobotDrivers\Roboteq.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config">
-      <SubType>Designer</SubType>
-    </None>
-  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
