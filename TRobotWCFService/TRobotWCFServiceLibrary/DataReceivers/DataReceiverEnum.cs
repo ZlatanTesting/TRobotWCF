@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace TRobotWCFServiceLibrary.DataReceivers
+﻿namespace TRobotWCFServiceLibrary.DataReceivers
 {
     public enum DataReceiver
-    {  
+    {
         Battery,
-        GPS,
+        Gps,
         Hokuyo,
-        IMU,
+        Imu,
         Sharp,
         Mobot,
-        Encoder
+        Encoder,
+        Temperature
     };
 }

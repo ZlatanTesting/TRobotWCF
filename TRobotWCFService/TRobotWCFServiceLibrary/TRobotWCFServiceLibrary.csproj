@@ -52,12 +52,13 @@
     <Compile Include="DataReceivers\DataReceiverEnum.cs" />
     <Compile Include="DataReceivers\DataReceiverFactory.cs" />
     <Compile Include="DataReceivers\EncoderDataReceiver.cs" />
-    <Compile Include="DataReceivers\GPSDataReceiver.cs" />
+    <Compile Include="DataReceivers\GpsDataReceiver.cs" />
     <Compile Include="DataReceivers\HokuyoSensorDataReceiver.cs" />
     <Compile Include="DataReceivers\IDataReceiver.cs" />
-    <Compile Include="DataReceivers\IMUOrientationModuleDataReceiver.cs" />
+    <Compile Include="DataReceivers\ImuOrientationModuleDataReceiver.cs" />
     <Compile Include="DataReceivers\SharpSensorDataReceiver.cs" />
     <Compile Include="DataReceivers\MobotSensorDataReceiver.cs" />
+    <Compile Include="DataReceivers\TemperatureDataReceiver.cs" />
     <Compile Include="IService1.cs" />
     <Compile Include="Messages\Data.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

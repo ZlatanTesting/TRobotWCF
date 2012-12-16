@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.ServiceModel;
-using System.Text;
-using System.Threading;
-using TRobotWCFServiceLibrary.Messages;
+﻿using TRobotWCFServiceLibrary.Messages;
 using TRobotWCFServiceLibrary.DataReceivers;
 using TRobotWCFServiceLibrary.DataProvider;
 using TRobotWCFServiceLibrary.TRobotDrivers;
@@ -18,10 +11,10 @@ namespace TRobotWCFServiceLibrary
         private Roboteq roboteQ;
         private Hokuyo hokuyo;
 
-        private int roboteQBaudRate = 115200;
-        private string roboteQComPort = "COM9";
-        private int hokuyoBaudRate = 19200;
-        private string hokuyoComPort = "COM8";
+        private const int roboteQBaudRate = 115200;
+        private const string roboteQComPort = "COM9";
+        private const int hokuyoBaudRate = 19200;
+        private const string hokuyoComPort = "COM8";
 
 
         public Service1()

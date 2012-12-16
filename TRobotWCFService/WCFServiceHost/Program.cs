@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.ServiceModel;
 using TRobotWCFServiceLibrary;
 
@@ -9,9 +6,11 @@ namespace WCFServiceHost
 {
     class Program
     {
+        private static ServiceHost host;
+
         static void Main(string[] args)
         {
-            ServiceHost host = new ServiceHost(typeof(Service1));
+            host = new ServiceHost(typeof(Service1));
 
             host.Open();
 

@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using TRobotWCFServiceLibrary.TRobotDrivers;
 
 namespace TRobotWCFServiceLibrary.DataReceivers
 {
-    class DataReceiverFactory
+    internal class DataReceiverFactory
     {
-        private Roboteq roboteQ;
         private Hokuyo hokuyo;
+        private Roboteq roboteQ;
 
         public DataReceiverFactory(Roboteq roboteQ, Hokuyo hokuyo)
         {
@@ -25,17 +22,17 @@ namespace TRobotWCFServiceLibrary.DataReceivers
                     {
                         return new BatteryDataReceiver(roboteQ);
                     }
-                case DataReceiver.GPS:
+                case DataReceiver.Gps:
                     {
-                        return new GPSDataReceiver();
+                        return new GpsDataReceiver();
                     }
                 case DataReceiver.Hokuyo:
                     {
                         return new HokuyoSensorDataReceiver(hokuyo);
                     }
-                case DataReceiver.IMU:
+                case DataReceiver.Imu:
                     {
-                        return new IMUOrientationModuleDataReceiver();
+                        return new ImuOrientationModuleDataReceiver();
                     }
                 case DataReceiver.Sharp:
                     {
@@ -48,6 +45,10 @@ namespace TRobotWCFServiceLibrary.DataReceivers
                 case DataReceiver.Encoder:
                     {
                         return new EncoderDataReceiver(roboteQ);
+                    }
+                case DataReceiver.Temperature:
+                    {
+                        return new TemperatureDataReceiver(roboteQ);
                     }
                 default:
                     {

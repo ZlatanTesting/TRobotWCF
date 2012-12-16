@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using TRobotWCFServiceLibrary.Messages;
 
 namespace TRobotWCFServiceLibrary.DataReceivers
 {
-    class IMUOrientationModuleDataReceiver:IDataReceiver
+    internal class ImuOrientationModuleDataReceiver : IDataReceiver
     {
         public Data ReceiveData()
         {

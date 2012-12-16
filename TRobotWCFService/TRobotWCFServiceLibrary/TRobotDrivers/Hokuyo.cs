@@ -1,32 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 
 namespace TRobotWCFServiceLibrary.TRobotDrivers
 {
-    class Hokuyo
+    internal class Hokuyo
     {
         private UrgCtrl.UrgCtrl hokuyo;
-
         private int baudRate;
         private int comPort;
 
 
         public Hokuyo(string comPort, int baudRate)
         {
-            hokuyo = new UrgCtrl.UrgCtrl();
             this.baudRate = baudRate;
             this.comPort = int.Parse(comPort.Substring(comPort.Count()-1,1));
         }
 
         public bool Connect()
         {
-            if (!hokuyo.IsConnected())
+            if (hokuyo != null)
             {
-                return hokuyo.Connect(comPort, baudRate);
+                Disconnect();
             }
-            return true;
+
+            hokuyo = new UrgCtrl.UrgCtrl();
+            return hokuyo.Connect(comPort, baudRate);
         }
 
         public void Disconnect()
@@ -61,16 +58,6 @@ namespace TRobotWCFServiceLibrary.TRobotDrivers
             hokuyo.Capture(distanceValuesFromHokuyo);
 
             return distanceValuesFromHokuyo;
-        }
-
-        public int GetTimestamp()
-        {
-            return hokuyo.GetTimestamp();
-        }
-
-        public string[] GetVersionInformation()
-        {
-            return hokuyo.GetVersionInformation();
         }
     }
 }

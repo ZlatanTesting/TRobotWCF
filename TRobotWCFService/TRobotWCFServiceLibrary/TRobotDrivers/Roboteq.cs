@@ -1,20 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-
 using System.Text;
-using System.IO;
 using System.IO.Ports;
 
 namespace TRobotWCFServiceLibrary.TRobotDrivers
 {
-    public class Roboteq
+    internal class Roboteq
     {
         private SerialPort serialPort;
         private string comPortName;
         private int baudRate;
-	    private int _encoderCpr = 48 * 75;
-	    private int _acceleration = 30; 
-	    private int _deceleration = 100;
+        private const int _encoderCpr = 48*75;
+        private const int _acceleration = 30; 
+	    private const int _deceleration = 100;
 
         public Roboteq(String comPortName, int baudRate)
         {
@@ -39,7 +37,7 @@ namespace TRobotWCFServiceLibrary.TRobotDrivers
             {
                 serialPort.Open();
 
-                driveInit();
+                DriveInit();
             }
             catch (Exception ex)
             {
@@ -54,11 +52,6 @@ namespace TRobotWCFServiceLibrary.TRobotDrivers
             {
                 serialPort.Close();
             }
-        }
-
-        public bool IsSerialPortOpen()
-        {
-            return serialPort.IsOpen;
         }
 
         public void SetPower(double leftWheel, double rightWheel)
@@ -84,8 +77,8 @@ namespace TRobotWCFServiceLibrary.TRobotDrivers
             //WriteOperation(WriteOperationType.SetConfig, "MMOD", 1, 1);
             //WriteOperation(WriteOperationType.SetConfig, "MMOD", 2, 1);
 
-            WriteOperation(WriteOperationType.RuntimeCommand, "G", 0, (int)(leftWheel * 10));
-            WriteOperation(WriteOperationType.RuntimeCommand, "G", 2, (int)(rightWheel * 10));
+            WriteOperation(WriteOperationType.RuntimeCommand, "G", 1, leftWheel * 10);
+            WriteOperation(WriteOperationType.RuntimeCommand, "G", 2, rightWheel * 10);
         }
 
         /// <summary>
@@ -107,6 +100,18 @@ namespace TRobotWCFServiceLibrary.TRobotDrivers
             channelNumber.Add(2);
 
             return WriteOperation(WriteOperationType.RuntimeQuery, "V", channelNumber);
+        }
+
+        /// <summary>
+        /// Returns value in degrees C.
+        /// </summary>
+        /// <returns>degrees C</returns>
+        public String[] GetTemperature()
+        {
+            List<int> channelNumber = new List<int>();
+            channelNumber.Add(0);
+
+            return WriteOperation(WriteOperationType.RuntimeQuery, "T", channelNumber);
         }
 
         /// <summary>
@@ -170,11 +175,9 @@ namespace TRobotWCFServiceLibrary.TRobotDrivers
                 string reply = response.Substring(pos + 1);
                 return reply.Split(':');
             }
-            else
-            {
-                ClearSerialPortBuffer();
-                return null;
-            }
+
+            ClearSerialPortBuffer();
+            return null;
         }
 
         /// <summary>
@@ -226,10 +229,9 @@ namespace TRobotWCFServiceLibrary.TRobotDrivers
         {
             serialPort.DiscardInBuffer();
             serialPort.DiscardOutBuffer();
-            //serialPort.Write("# C");
         }
 
-        private void driveInit()
+        private void DriveInit()
         {
             // All motors in open-loop speed - default
             WriteOperation(WriteOperationType.SetConfig, "MMOD", 1, 1);

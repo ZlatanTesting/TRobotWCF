@@ -5,7 +5,19 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TRobotWCFServiceLibrary", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WCFServiceHost", "WCFServiceHost\WCFServiceHost.csproj", "{6EA3E06A-8E2E-49F1-9A13-5ECFF647EDB3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestsProject", "UnitTestsProject\UnitTestsProject.csproj", "{667876CD-2EE6-4DC6-8B90-3D4BF21028D0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D4FB7A57-1AD8-47D2-B57F-B9EF0CE00379}"
+	ProjectSection(SolutionItems) = preProject
+		Local.testsettings = Local.testsettings
+		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
+		TRobotWCFService.vsmdi = TRobotWCFService.vsmdi
+	EndProjectSection
+EndProject
 Global
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = TRobotWCFService.vsmdi
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|Mixed Platforms = Debug|Mixed Platforms
@@ -35,6 +47,16 @@ Global
 		{6EA3E06A-8E2E-49F1-9A13-5ECFF647EDB3}.Release|Mixed Platforms.Build.0 = Release|x86
 		{6EA3E06A-8E2E-49F1-9A13-5ECFF647EDB3}.Release|x86.ActiveCfg = Release|x86
 		{6EA3E06A-8E2E-49F1-9A13-5ECFF647EDB3}.Release|x86.Build.0 = Release|x86
+		{667876CD-2EE6-4DC6-8B90-3D4BF21028D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{667876CD-2EE6-4DC6-8B90-3D4BF21028D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{667876CD-2EE6-4DC6-8B90-3D4BF21028D0}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{667876CD-2EE6-4DC6-8B90-3D4BF21028D0}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{667876CD-2EE6-4DC6-8B90-3D4BF21028D0}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{667876CD-2EE6-4DC6-8B90-3D4BF21028D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{667876CD-2EE6-4DC6-8B90-3D4BF21028D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{667876CD-2EE6-4DC6-8B90-3D4BF21028D0}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{667876CD-2EE6-4DC6-8B90-3D4BF21028D0}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{667876CD-2EE6-4DC6-8B90-3D4BF21028D0}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
