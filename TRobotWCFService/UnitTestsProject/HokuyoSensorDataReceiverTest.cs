@@ -16,6 +16,7 @@ namespace UnitTestsProject
         private const string hokuyoComPort = "COM8";
         private static Hokuyo hokuyo;
         private const string key = "distance0";
+        private const int maxBufferSize = 682;
 
         [ClassInitialize]
         public static void MyClassInitialize(TestContext testContext)
@@ -52,6 +53,18 @@ namespace UnitTestsProject
             Data actual = target.ReceiveData();
 
             Assert.IsNotNull(actual.Dictionary[key]);
+        }
+
+        /// <summary>
+        ///A test for ReceiveData - how many data point received
+        ///</summary>
+        [TestMethod]
+        public void NumberOfReceivedDataTest()
+        {
+            HokuyoSensorDataReceiver target = new HokuyoSensorDataReceiver(hokuyo);
+            Data actual = target.ReceiveData();
+
+            Assert.AreEqual(actual.Dictionary.Count, maxBufferSize);
         }
     }
 }

@@ -7,6 +7,7 @@ namespace TRobotWCFServiceLibrary.TRobotDrivers
         private UrgCtrl.UrgCtrl hokuyo;
         private int baudRate;
         private int comPort;
+        private const int maxBufferSize = 682;
 
 
         public Hokuyo(string comPort, int baudRate)
@@ -36,7 +37,7 @@ namespace TRobotWCFServiceLibrary.TRobotDrivers
 
         public int[] GetData()
         {
-            int[] distanceValuesFromHokuyo = new int[hokuyo.MaxBufferSize];
+            int[] distanceValuesFromHokuyo = new int[maxBufferSize];
 
             return Capture(distanceValuesFromHokuyo);
         }
