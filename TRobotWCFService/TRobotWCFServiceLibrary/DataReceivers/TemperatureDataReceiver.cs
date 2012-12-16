@@ -16,7 +16,7 @@ namespace TRobotWCFServiceLibrary.DataReceivers
         }
 
         /// <summary>
-        ///     This method returns temperature of ... in degrees C.
+        ///     This method returns temperature of chipset in degrees C.
         ///     The key for temperature value is 'temperature'.
         /// </summary>
         public Data ReceiveData()
