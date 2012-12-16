@@ -17,30 +17,18 @@ namespace UnitTestsProject
         private const string key = "charge";
         private static Roboteq roboteQ;
 
-        [ClassInitialize]
-        public static void MyClassInitialize(TestContext testContext)
+        [TestInitialize]
+        public void MyTestInitialize()
         {
             roboteQ = new Roboteq(roboteQComPort, roboteQBaudRate);
             roboteQ.Connect();
         }
 
-        [ClassCleanup]
-        public static void MyClassCleanup()
+        [TestCleanup]
+        public void MyTestCleanup()
         {
             roboteQ.Disconnect();
         }
-
-        //Use TestInitialize to run code before running each test
-        //[TestInitialize()]
-        //public void MyTestInitialize()
-        //{
-        //}
-        //
-        //Use TestCleanup to run code after each test has run
-        //[TestCleanup()]
-        //public void MyTestCleanup()
-        //{
-        //}
 
         /// <summary>
         ///A test for ReceiveData - isNotNull
