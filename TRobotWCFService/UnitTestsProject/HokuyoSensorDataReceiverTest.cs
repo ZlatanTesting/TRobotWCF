@@ -35,7 +35,7 @@ namespace UnitTestsProject
         ///A test for ReceiveData - isNotNull
         ///</summary>
         [TestMethod]
-        public void ReceiveDataTest()
+        public void HokuyoReceiveDataTest()
         {
             HokuyoSensorDataReceiver target = new HokuyoSensorDataReceiver(hokuyo);
             Data actual = target.ReceiveData();
@@ -47,7 +47,7 @@ namespace UnitTestsProject
         ///A test for ReceiveData - how many data point received
         ///</summary>
         [TestMethod]
-        public void NumberOfReceivedDataTest()
+        public void HokuyoNumberOfReceivedDataTest()
         {
             HokuyoSensorDataReceiver target = new HokuyoSensorDataReceiver(hokuyo);
             Data actual = target.ReceiveData();

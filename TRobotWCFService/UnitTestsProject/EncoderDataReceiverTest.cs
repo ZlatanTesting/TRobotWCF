@@ -34,7 +34,7 @@ namespace UnitTestsProject
         ///A test for ReceiveData - isNotNull
         ///</summary>
         [TestMethod]
-        public void ReceiveDataTest()
+        public void EncoderReceiveDataTest()
         {
             EncoderDataReceiver ecoderDataReceiver = new EncoderDataReceiver(roboteQ);
             Data actual = ecoderDataReceiver.ReceiveData();

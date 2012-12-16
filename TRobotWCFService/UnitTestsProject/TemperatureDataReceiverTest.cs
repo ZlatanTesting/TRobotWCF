@@ -34,7 +34,7 @@ namespace UnitTestsProject
         ///A test for ReceiveData - isNotNull
         ///</summary>
         [TestMethod]
-        public void ReceiveDataTest()
+        public void TemperatureReceiveDataTest()
         {
             TemperatureDataReceiver temperatureDataReceiver = new TemperatureDataReceiver(roboteQ);
             Data actual = temperatureDataReceiver.ReceiveData();

@@ -34,7 +34,7 @@ namespace UnitTestsProject
         ///A test for ReceiveData - isNotNull
         ///</summary>
         [TestMethod]
-        public void ReceiveDataTest()
+        public void BatteryReceiveDataTest()
         {
             BatteryDataReceiver batteryDataReceiver = new BatteryDataReceiver(roboteQ);
             Data actual = batteryDataReceiver.ReceiveData();
