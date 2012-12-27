@@ -12,34 +12,30 @@ namespace UnitTestsProject
     [TestClass]
     public class BatteryDataReceiverTest
     {
-        private const int roboteQBaudRate = 115200;
-        private const string roboteQComPort = "COM9";
         private const string key = "charge";
-        private static Roboteq roboteQ;
-
-        [TestInitialize]
-        public void MyTestInitialize()
-        {
-            roboteQ = new Roboteq(roboteQComPort, roboteQBaudRate);
-            roboteQ.Connect();
-        }
-
-        [TestCleanup]
-        public void MyTestCleanup()
-        {
-            roboteQ.Disconnect();
-        }
 
         /// <summary>
         ///A test for ReceiveData - isNotNull
         ///</summary>
         [TestMethod]
-        public void BatteryReceiveDataTest()
+        public void BatteryReceiveDataIsNotNullTest()
         {
-            BatteryDataReceiver batteryDataReceiver = new BatteryDataReceiver(roboteQ);
+            BatteryDataReceiver batteryDataReceiver = new BatteryDataReceiver();
             Data actual = batteryDataReceiver.ReceiveData();
 
             Assert.IsNotNull(actual.Dictionary[key]);
+        }
+
+        /// <summary>
+        ///A test for ReceiveData - value is between 0 and 100%
+        ///</summary>
+        [TestMethod]
+        public void BatteryReceiveDataBetween0And100Test()
+        {
+            BatteryDataReceiver batteryDataReceiver = new BatteryDataReceiver();
+            Data actual = batteryDataReceiver.ReceiveData();
+
+            Assert.IsTrue(actual.Dictionary[key] >= 0 && actual.Dictionary[key] <= 100);
         }
     }
 }

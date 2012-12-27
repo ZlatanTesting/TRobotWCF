@@ -7,12 +7,14 @@ namespace TRobotWCFServiceLibrary.DataReceivers
 {
     internal class HokuyoSensorDataReceiver : IDataReceiver
     {
+        private const int hokuyoBaudRate = 19200;
+        private const int hokuyoComPort = 8;
         private Hokuyo hokuyo;
         private const String key = "distance";
 
-        public HokuyoSensorDataReceiver(Hokuyo hokuyo)
+        public HokuyoSensorDataReceiver()
         {
-            this.hokuyo = hokuyo;
+            hokuyo = new Hokuyo(hokuyoComPort, hokuyoBaudRate);
         }
 
         /// <summary>
@@ -23,9 +25,11 @@ namespace TRobotWCFServiceLibrary.DataReceivers
         /// </summary>
         public Data ReceiveData()
         {
+            hokuyo.Connect();
             int[] distanceValuesFromHokuyo = hokuyo.GetData();
 
             Data data = new Data();
+            data.DataReceiverType = DataReceiver.Hokuyo;
 
             int numberOfDistanceValues = distanceValuesFromHokuyo.Count();
 
@@ -36,6 +40,7 @@ namespace TRobotWCFServiceLibrary.DataReceivers
                 data.Dictionary.Add(currentKey, distanceValuesFromHokuyo[i]);
             }
 
+            hokuyo.Disconnect();
             return data;
         }
     }

@@ -8,31 +8,17 @@ namespace TRobotWCFServiceLibrary
     public class Service1 : IService1
     {
         private DataReceiverFactory dataReceiverFactory;
-        private Roboteq roboteQ;
-        private Hokuyo hokuyo;
-
-        private const int roboteQBaudRate = 115200;
-        private const string roboteQComPort = "COM9";
-        private const int hokuyoBaudRate = 19200;
-        private const string hokuyoComPort = "COM8";
-
 
         public Service1()
         {
-            ConnectAllDevices();
-
-            dataReceiverFactory = new DataReceiverFactory(roboteQ, hokuyo);
+            dataReceiverFactory = new DataReceiverFactory();
         }
 
-        public bool SendData(Data data)
+        public void SendData(Data data)
         {
-            IDataProvider dataProvider = new EncoderDataProvider(data, roboteQ);
+            IDataProvider dataProvider = new EncoderDataProvider(data);
 
-            bool response = dataProvider.ProvideData();
-
-            DisconnectAllDevices();
-
-            return response;
+            dataProvider.ProvideData();
         }
 
         public Data LoadData(Data request)
@@ -41,23 +27,7 @@ namespace TRobotWCFServiceLibrary
 
             Data response = dataReceiver.ReceiveData();
 
-            DisconnectAllDevices();
-
             return response;
-        }
-
-        private void ConnectAllDevices()
-        {
-            roboteQ = new Roboteq(roboteQComPort, roboteQBaudRate);
-            roboteQ.Connect();
-            hokuyo = new Hokuyo(hokuyoComPort, hokuyoBaudRate);
-            hokuyo.Connect();
-        }
-
-        private void DisconnectAllDevices()
-        {
-            roboteQ.Disconnect();
-            hokuyo.Disconnect();
         }
     }
 }

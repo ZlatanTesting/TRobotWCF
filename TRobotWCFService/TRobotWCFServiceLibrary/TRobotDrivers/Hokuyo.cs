@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System;
 
 namespace TRobotWCFServiceLibrary.TRobotDrivers
 {
@@ -10,13 +11,13 @@ namespace TRobotWCFServiceLibrary.TRobotDrivers
         private const int maxBufferSize = 682;
 
 
-        public Hokuyo(string comPort, int baudRate)
+        public Hokuyo(int comPort, int baudRate)
         {
             this.baudRate = baudRate;
-            this.comPort = int.Parse(comPort.Substring(comPort.Count()-1,1));
+            this.comPort = comPort;
         }
 
-        public bool Connect()
+        public void Connect()
         {
             if (hokuyo != null)
             {
@@ -24,7 +25,20 @@ namespace TRobotWCFServiceLibrary.TRobotDrivers
             }
 
             hokuyo = new UrgCtrl.UrgCtrl();
-            return hokuyo.Connect(comPort, baudRate);
+
+            bool connected = false;
+            while (!connected)
+            {
+                try
+                {
+                    hokuyo.Connect(comPort, baudRate);
+                    connected = true;
+                }
+                catch (Exception)
+                {
+                    connected = false;
+                }
+            }
         }
 
         public void Disconnect()

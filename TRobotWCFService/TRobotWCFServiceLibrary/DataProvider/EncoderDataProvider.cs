@@ -6,25 +6,30 @@ namespace TRobotWCFServiceLibrary.DataProvider
 {
     class EncoderDataProvider:IDataProvider
     {
+        private const int roboteQBaudRate = 115200;
+        private const string roboteQComPort = "COM9";
         private Roboteq roboteQ;
         private Data driversData;
 
-        public EncoderDataProvider(Data driversData, Roboteq roboteQ) 
+        public EncoderDataProvider(Data driversData) 
         {
             this.driversData = driversData;
-            this.roboteQ = roboteQ;
+            roboteQ = new Roboteq(roboteQComPort, roboteQBaudRate);
         }
 
-        public bool ProvideData()
+        public void ProvideData()
         {
             try
             {
-                roboteQ.SetDriverSpeed((int)driversData.Dictionary["leftWheel"], (int)driversData.Dictionary["rightWheel"]);
-                return true;
+                roboteQ.Connect();
+                roboteQ.SetPower(driversData.Dictionary["leftWheelPower"], driversData.Dictionary["rightWheelPower"]);
             }
             catch (Exception)
             {
-                return false;
+            }
+            finally
+            {
+                roboteQ.Disconnect();
             }
         }
     }

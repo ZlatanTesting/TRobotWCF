@@ -12,24 +12,8 @@ namespace UnitTestsProject
     [TestClass]
     public class HokuyoSensorDataReceiverTest
     {
-        private const int hokuyoBaudRate = 19200;
-        private const string hokuyoComPort = "COM8";
-        private static Hokuyo hokuyo;
         private const string key = "distance0";
         private const int maxBufferSize = 682;
-
-        [TestInitialize()]
-        public void MyTestInitialize()
-        {
-            hokuyo = new Hokuyo(hokuyoComPort, hokuyoBaudRate);
-            hokuyo.Connect();
-        }
-        
-        [TestCleanup()]
-        public void MyTestCleanup()
-        {
-            hokuyo.Disconnect();
-        }
 
         /// <summary>
         ///A test for ReceiveData - isNotNull
@@ -37,22 +21,22 @@ namespace UnitTestsProject
         [TestMethod]
         public void HokuyoReceiveDataTest()
         {
-            HokuyoSensorDataReceiver target = new HokuyoSensorDataReceiver(hokuyo);
+            HokuyoSensorDataReceiver target = new HokuyoSensorDataReceiver();
             Data actual = target.ReceiveData();
 
             Assert.IsNotNull(actual.Dictionary[key]);
         }
 
         /// <summary>
-        ///A test for ReceiveData - how many data point received
+        ///A test for ReceiveData - valid number of received data points
         ///</summary>
         [TestMethod]
-        public void HokuyoNumberOfReceivedDataTest()
+        public void HokuyoValidNumberOfReceivedDataTest()
         {
-            HokuyoSensorDataReceiver target = new HokuyoSensorDataReceiver(hokuyo);
+            HokuyoSensorDataReceiver target = new HokuyoSensorDataReceiver();
             Data actual = target.ReceiveData();
 
-            Assert.AreEqual(actual.Dictionary.Count, maxBufferSize);
+            Assert.AreEqual(maxBufferSize, actual.Dictionary.Count);
         }
     }
 }

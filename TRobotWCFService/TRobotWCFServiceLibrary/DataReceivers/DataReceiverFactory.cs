@@ -5,34 +5,17 @@ namespace TRobotWCFServiceLibrary.DataReceivers
 {
     internal class DataReceiverFactory
     {
-        private Hokuyo hokuyo;
-        private Roboteq roboteQ;
-
-        public DataReceiverFactory(Roboteq roboteQ, Hokuyo hokuyo)
-        {
-            this.roboteQ = roboteQ;
-            this.hokuyo = hokuyo;
-        }
-
         public IDataReceiver GetDataReceiver(DataReceiver dataReceiver)
         {
             switch (dataReceiver)
             {
                 case DataReceiver.Battery:
                     {
-                        return new BatteryDataReceiver(roboteQ);
-                    }
-                case DataReceiver.Gps:
-                    {
-                        return new GpsDataReceiver();
+                        return new BatteryDataReceiver();
                     }
                 case DataReceiver.Hokuyo:
                     {
-                        return new HokuyoSensorDataReceiver(hokuyo);
-                    }
-                case DataReceiver.Imu:
-                    {
-                        return new ImuOrientationModuleDataReceiver();
+                        return new HokuyoSensorDataReceiver();
                     }
                 case DataReceiver.Sharp:
                     {
@@ -44,11 +27,11 @@ namespace TRobotWCFServiceLibrary.DataReceivers
                     }
                 case DataReceiver.Encoder:
                     {
-                        return new EncoderDataReceiver(roboteQ);
+                        return new EncoderDataReceiver();
                     }
                 case DataReceiver.Temperature:
                     {
-                        return new TemperatureDataReceiver(roboteQ);
+                        return new TemperatureDataReceiver();
                     }
                 default:
                     {

@@ -12,23 +12,7 @@ namespace UnitTestsProject
     [TestClass]
     public class EncoderDataReceiverTest
     {
-        private const int roboteQBaudRate = 115200;
-        private const string roboteQComPort = "COM9";
         private const string key = "speed";
-        private static Roboteq roboteQ;
-
-        [TestInitialize]
-        public void MyTestInitialize()
-        {
-            roboteQ = new Roboteq(roboteQComPort, roboteQBaudRate);
-            roboteQ.Connect();
-        }
-
-        [TestCleanup]
-        public void MyTestCleanup()
-        {
-            roboteQ.Disconnect();
-        }
 
         /// <summary>
         ///A test for ReceiveData - isNotNull
@@ -36,7 +20,7 @@ namespace UnitTestsProject
         [TestMethod]
         public void EncoderReceiveDataTest()
         {
-            EncoderDataReceiver ecoderDataReceiver = new EncoderDataReceiver(roboteQ);
+            EncoderDataReceiver ecoderDataReceiver = new EncoderDataReceiver();
             Data actual = ecoderDataReceiver.ReceiveData();
 
             Assert.IsNotNull(actual.Dictionary[key]);

@@ -10,7 +10,7 @@ namespace TRobotWCFServiceLibrary.TRobotDrivers
         private SerialPort serialPort;
         private string comPortName;
         private int baudRate;
-        private const int _encoderCpr = 48*75;
+        private const int _encoderCpr = 3600;
         private const int _acceleration = 30; 
 	    private const int _deceleration = 100;
 
@@ -31,19 +31,23 @@ namespace TRobotWCFServiceLibrary.TRobotDrivers
             serialPort.Handshake = Handshake.None;
             serialPort.Encoding = Encoding.ASCII;
             serialPort.NewLine = "\r";
-            serialPort.ReadTimeout = 1100;
+            serialPort.ReadTimeout = 50;
+            serialPort.WriteTimeout = 50;
 
-            try
+            bool connected = false;
+            while (!connected)
             {
-                serialPort.Open();
-
-                DriveInit();
+                try
+                {
+                    serialPort.Open();
+                    connected = true;
+                }
+                catch (Exception)
+                {
+                    connected = false;
+                }
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message + "\n\n" + ex.StackTrace);
-            }
-
+            DriveInit();
         }
 
         public void Disconnect()
@@ -56,11 +60,7 @@ namespace TRobotWCFServiceLibrary.TRobotDrivers
 
         public void SetPower(double leftWheel, double rightWheel)
         {
-            List<int> wheelPowers = new List<int>();
-            wheelPowers.Add((int)(leftWheel * 1000));
-            wheelPowers.Add((int)(rightWheel * 1000));
-
-            WriteOperation(WriteOperationType.RuntimeCommand, "M", wheelPowers);
+            WriteOperation(WriteOperationType.RuntimeCommand, "M", (int)(leftWheel * 10), (int)(rightWheel * 10));
         }
 
         /// <summary>
@@ -73,9 +73,8 @@ namespace TRobotWCFServiceLibrary.TRobotDrivers
             //WriteOperation(WriteOperationType.SetConfig, "MVEL", 1, (int)(speed*115));
             //WriteOperation(WriteOperationType.SetConfig, "MVEL", 2, (int)(speed*115));
             
-            
-            //WriteOperation(WriteOperationType.SetConfig, "MMOD", 1, 1);
-            //WriteOperation(WriteOperationType.SetConfig, "MMOD", 2, 1);
+            WriteOperation(WriteOperationType.SetConfig, "MMOD", 1, 1);
+            WriteOperation(WriteOperationType.SetConfig, "MMOD", 2, 1);
 
             WriteOperation(WriteOperationType.RuntimeCommand, "G", 1, leftWheel * 10);
             WriteOperation(WriteOperationType.RuntimeCommand, "G", 2, rightWheel * 10);
@@ -167,6 +166,14 @@ namespace TRobotWCFServiceLibrary.TRobotDrivers
                 {
                     System.Threading.Thread.Sleep(10);
                     response = serialPort.ReadLine();
+                    if (response.Contains("+"))
+                    {
+                        response = "";
+                    }
+                    else if (response.Contains("-"))
+                    {
+                        response = "";
+                    }
                 }
 
                 ClearSerialPortBuffer();
@@ -227,6 +234,10 @@ namespace TRobotWCFServiceLibrary.TRobotDrivers
 
         private void ClearSerialPortBuffer()
         {
+            if (!serialPort.IsOpen)
+            {
+                serialPort.Open();
+            }
             serialPort.DiscardInBuffer();
             serialPort.DiscardOutBuffer();
         }
@@ -234,8 +245,8 @@ namespace TRobotWCFServiceLibrary.TRobotDrivers
         private void DriveInit()
         {
             // All motors in open-loop speed - default
-            WriteOperation(WriteOperationType.SetConfig, "MMOD", 1, 1);
-            WriteOperation(WriteOperationType.SetConfig, "MMOD", 2, 1);  
+            WriteOperation(WriteOperationType.SetConfig, "MMOD", 1, 0);
+            WriteOperation(WriteOperationType.SetConfig, "MMOD", 2, 0);
         	
             // turn off command echo
             WriteOperation(WriteOperationType.SetConfig, "ECHOF", 1);
@@ -253,10 +264,10 @@ namespace TRobotWCFServiceLibrary.TRobotDrivers
             WriteOperation(WriteOperationType.SetConfig, "RWD", 1000, 1000);
 
             //set acceleration and deceleration
-            //WriteOperation(WriteOperationType.RuntimeCommand, "AC", 1, _acceleration);
-            //WriteOperation(WriteOperationType.RuntimeCommand, "AC", 2, _acceleration);
-            //WriteOperation(WriteOperationType.RuntimeCommand, "DC", 1, _deceleration);
-            //WriteOperation(WriteOperationType.RuntimeCommand, "DC", 2, _deceleration);
+            WriteOperation(WriteOperationType.RuntimeCommand, "AC", 1, _acceleration);
+            WriteOperation(WriteOperationType.RuntimeCommand, "AC", 2, _acceleration);
+            WriteOperation(WriteOperationType.RuntimeCommand, "DC", 1, _deceleration);
+            WriteOperation(WriteOperationType.RuntimeCommand, "DC", 2, _deceleration);
 
             // disable integral tracking error
             WriteOperation(WriteOperationType.SetConfig, "CLERD", 1, 0);

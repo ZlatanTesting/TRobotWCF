@@ -2,6 +2,6 @@
 {
     interface IDataProvider
     {
-        bool ProvideData();
+        void ProvideData();
     }
 }

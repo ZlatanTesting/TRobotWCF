@@ -7,7 +7,7 @@ namespace TRobotWCFServiceLibrary
     public interface IService1
     {
         [OperationContract]
-        bool SendData(Data data);
+        void SendData(Data data);
 
         [OperationContract]
         Data LoadData(Data request);
