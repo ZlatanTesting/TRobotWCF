@@ -64,6 +64,7 @@
     <Compile Include="TRobotDrivers\Arduino.cs" />
     <Compile Include="TRobotDrivers\Hokuyo.cs" />
     <Compile Include="TRobotDrivers\Roboteq.cs" />
+    <Compile Include="Utils\Logger.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>

@@ -2,6 +2,7 @@
 using System.Linq;
 using TRobotWCFServiceLibrary.Messages;
 using TRobotWCFServiceLibrary.TRobotDrivers;
+using TRobotWCFServiceLibrary.Utils;
 
 namespace TRobotWCFServiceLibrary.DataReceivers
 {
@@ -25,22 +26,29 @@ namespace TRobotWCFServiceLibrary.DataReceivers
         /// </summary>
         public Data ReceiveData()
         {
-            hokuyo.Connect();
-            int[] distanceValuesFromHokuyo = hokuyo.GetData();
-
             Data data = new Data();
             data.DataReceiverType = DataReceiver.Hokuyo;
-
-            int numberOfDistanceValues = distanceValuesFromHokuyo.Count();
-
-            String currentKey;
-            for (int i = 0; i < numberOfDistanceValues; i++)
+            try
             {
-                currentKey = key + i;
-                data.Dictionary.Add(currentKey, distanceValuesFromHokuyo[i]);
-            }
+                hokuyo.Connect();
+                int[] distanceValuesFromHokuyo = hokuyo.GetData();
+                int numberOfDistanceValues = distanceValuesFromHokuyo.Count();
 
-            hokuyo.Disconnect();
+                String currentKey;
+                for (int i = 0; i < numberOfDistanceValues; i++)
+                {
+                    currentKey = key + i;
+                    data.Dictionary.Add(currentKey, distanceValuesFromHokuyo[i]);
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Log(e);
+            }
+            finally
+            {
+                hokuyo.Disconnect();
+            }
             return data;
         }
     }

@@ -1,6 +1,7 @@
 ﻿using System;
 using TRobotWCFServiceLibrary.Messages;
 using TRobotWCFServiceLibrary.TRobotDrivers;
+using TRobotWCFServiceLibrary.Utils;
 
 namespace TRobotWCFServiceLibrary.DataReceivers
 {
@@ -25,17 +26,24 @@ namespace TRobotWCFServiceLibrary.DataReceivers
         /// </summary>
         public Data ReceiveData()
         {
-            roboteQ.Connect();
-            String[] response = roboteQ.GetSpeed();
-
-            double velocity = ((double.Parse(response[0]) + Double.Parse(response[1])) / 2)*(wheelCircuitInKm/hoursInMinute);
-
             Data data = new Data();
             data.DataReceiverType = DataReceiver.Encoder;
+            try
+            {
+                roboteQ.Connect();
+                String[] response = roboteQ.GetSpeed();
 
-            data.Dictionary.Add(key, velocity);
-
-            roboteQ.Disconnect();
+                double velocity = ((double.Parse(response[0]) + Double.Parse(response[1])) / 2) * (wheelCircuitInKm / hoursInMinute);
+                data.Dictionary.Add(key, velocity);   
+            }
+            catch (Exception e)
+            {
+                Logger.Log(e);
+            }
+            finally
+            {
+                roboteQ.Disconnect();
+            }
             return data;
         }
     }

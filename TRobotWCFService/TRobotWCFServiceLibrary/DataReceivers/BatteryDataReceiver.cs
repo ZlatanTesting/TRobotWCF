@@ -2,6 +2,7 @@
 using System.Linq;
 using TRobotWCFServiceLibrary.Messages;
 using TRobotWCFServiceLibrary.TRobotDrivers;
+using TRobotWCFServiceLibrary.Utils;
 
 namespace TRobotWCFServiceLibrary.DataReceivers
 {
@@ -23,17 +24,24 @@ namespace TRobotWCFServiceLibrary.DataReceivers
         /// </summary>
         public Data ReceiveData()
         {
-            roboteQ.Connect();
-            String[] response = roboteQ.GetBatteryVoltage();
-
-            int chargeInPercets = (int) (Double.Parse(response.First())*6.25 - 425);
-
             Data data = new Data();
             data.DataReceiverType = DataReceiver.Battery;
+            try
+            {
+                roboteQ.Connect();
+                String[] response = roboteQ.GetBatteryVoltage();
 
-            data.Dictionary.Add(key, chargeInPercets);
-
-            roboteQ.Disconnect();
+                int chargeInPercets = (int)(Double.Parse(response.First()) * 6.25 - 425);
+                data.Dictionary.Add(key, chargeInPercets);
+            }
+            catch (Exception e)
+            {
+                Logger.Log(e);
+            }
+            finally
+            {
+                roboteQ.Disconnect();
+            }
             return data;
         }
     }

@@ -1,5 +1,7 @@
 ﻿using TRobotWCFServiceLibrary.Messages;
 using TRobotWCFServiceLibrary.TRobotDrivers;
+using TRobotWCFServiceLibrary.Utils;
+using System;
 
 namespace TRobotWCFServiceLibrary.DataReceivers
 {
@@ -22,13 +24,22 @@ namespace TRobotWCFServiceLibrary.DataReceivers
         /// </summary>
         public Data ReceiveData()
         {
-            arduino.Connect();
             Data data = new Data();
             data.DataReceiverType = DataReceiver.Mobot;
+            try
+            {
+                arduino.Connect();
 
-            data.Dictionary.Add(key, 200);
-
-            arduino.Disconnect();
+                data.Dictionary.Add(key, 200);
+            }
+            catch (Exception e)
+            {
+                Logger.Log(e);
+            }
+            finally
+            {
+                arduino.Disconnect();
+            }
             return data;
         }
     }

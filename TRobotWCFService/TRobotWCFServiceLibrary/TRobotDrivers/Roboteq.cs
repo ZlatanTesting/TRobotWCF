@@ -149,6 +149,7 @@ namespace TRobotWCFServiceLibrary.TRobotDrivers
                 string temp = Convert.ToString(argument);
                 command += (" " + temp);
             }
+            serialPort.DiscardInBuffer();
             serialPort.WriteLine(command);
 
             if ((opType == WriteOperationType.RuntimeQuery) || (opType == WriteOperationType.GetConfig))
@@ -157,15 +158,8 @@ namespace TRobotWCFServiceLibrary.TRobotDrivers
                 while (response.Length == 0)
                 {
                     System.Threading.Thread.Sleep(10);
-                    try
-                    {
-                        response = serialPort.ReadLine();
-                    }
-                    catch (Exception)
-                    {
-                        //ClearSerialPortBuffer();
-                        Disconnect();
-                    }
+                    response = serialPort.ReadLine();
+
                     if (response.Contains("+"))
                     {
                         response = "";

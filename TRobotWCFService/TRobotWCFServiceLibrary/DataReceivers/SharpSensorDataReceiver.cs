@@ -1,6 +1,7 @@
 ﻿using TRobotWCFServiceLibrary.Messages;
 using TRobotWCFServiceLibrary.TRobotDrivers;
 using System;
+using TRobotWCFServiceLibrary.Utils;
 
 namespace TRobotWCFServiceLibrary.DataReceivers
 {
@@ -23,27 +24,36 @@ namespace TRobotWCFServiceLibrary.DataReceivers
         /// </summary>
         public Data ReceiveData()
         {
-            arduino.Connect();
-            String[] distances = arduino.GetSharpsData();
             Data data = new Data();
             data.DataReceiverType = DataReceiver.Sharp;
-
-            for (int i = 1; i <= distances.Length; i++)
+            try
             {
-                Int16 hexToDecimal = Convert.ToInt16(distances[i-1], 16);
-                double distance = (60.495 * Math.Pow(hexToDecimal * 0.0049, -1.1904) * 10);
+                arduino.Connect();
+                String[] distances = arduino.GetSharpsData();
+                
+                for (int i = 1; i <= distances.Length; i++)
+                {
+                    Int16 hexToDecimal = Convert.ToInt16(distances[i - 1], 16);
+                    double distance = (60.495 * Math.Pow(hexToDecimal * 0.0049, -1.1904) * 10);
 
-                if (distance >= 200 && distance <= 1500)
-                {
-                    data.Dictionary.Add(key + i, distance);
-                }
-                else
-                {
-                    data.Dictionary.Add(key + i, 0);
+                    if (distance >= 200 && distance <= 1500)
+                    {
+                        data.Dictionary.Add(key + i, distance);
+                    }
+                    else
+                    {
+                        data.Dictionary.Add(key + i, 0);
+                    }
                 }
             }
-
-            arduino.Disconnect();
+            catch (Exception e)
+            {
+                Logger.Log(e);
+            }
+            finally
+            {
+                arduino.Disconnect();
+            }
             return data;
         }
     }

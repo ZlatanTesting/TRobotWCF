@@ -2,6 +2,7 @@
 using System.Linq;
 using TRobotWCFServiceLibrary.Messages;
 using TRobotWCFServiceLibrary.TRobotDrivers;
+using TRobotWCFServiceLibrary.Utils;
 
 namespace TRobotWCFServiceLibrary.DataReceivers
 {
@@ -23,17 +24,24 @@ namespace TRobotWCFServiceLibrary.DataReceivers
         /// </summary>
         public Data ReceiveData()
         {
-            roboteQ.Connect();
-            String[] response = roboteQ.GetTemperature();
-
-            int degreesC = int.Parse(response.First());
-
             Data data = new Data();
             data.DataReceiverType = DataReceiver.Temperature;
+            try
+            {
+                roboteQ.Connect();
+                String[] response = roboteQ.GetTemperature();
+                int degreesC = int.Parse(response.First());
 
-            data.Dictionary.Add(key, degreesC);
-
-            roboteQ.Disconnect();
+                data.Dictionary.Add(key, degreesC);
+            }
+            catch (Exception e)
+            {
+                Logger.Log(e);
+            }
+            finally
+            {
+                roboteQ.Disconnect();
+            }
             return data;
         }
     }

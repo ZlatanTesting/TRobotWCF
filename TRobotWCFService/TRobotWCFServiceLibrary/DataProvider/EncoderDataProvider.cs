@@ -1,6 +1,7 @@
 ﻿using System;
 using TRobotWCFServiceLibrary.Messages;
 using TRobotWCFServiceLibrary.TRobotDrivers;
+using TRobotWCFServiceLibrary.Utils;
 
 namespace TRobotWCFServiceLibrary.DataProvider
 {
@@ -25,8 +26,9 @@ namespace TRobotWCFServiceLibrary.DataProvider
                 //roboteQ.SetDriverSpeed((int)driversData.Dictionary["leftWheelPower"], (int)driversData.Dictionary["rightWheelPower"]);
                 roboteQ.SetPower(driversData.Dictionary["leftWheelPower"], driversData.Dictionary["rightWheelPower"]);
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Logger.Log(e);
             }
             finally
             {
