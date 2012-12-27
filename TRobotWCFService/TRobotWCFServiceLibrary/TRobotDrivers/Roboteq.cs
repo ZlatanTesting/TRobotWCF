@@ -97,7 +97,6 @@ namespace TRobotWCFServiceLibrary.TRobotDrivers
         {
             List<int> channelNumber = new List<int>();
             channelNumber.Add(2);
-
             return WriteOperation(WriteOperationType.RuntimeQuery, "V", channelNumber);
         }
 
@@ -109,7 +108,6 @@ namespace TRobotWCFServiceLibrary.TRobotDrivers
         {
             List<int> channelNumber = new List<int>();
             channelNumber.Add(2);
-
             return WriteOperation(WriteOperationType.RuntimeQuery, "T", channelNumber);
         }
 
@@ -129,7 +127,6 @@ namespace TRobotWCFServiceLibrary.TRobotDrivers
             }
 
             string prefix = "";
-
             switch (opType)
             {
                 case WriteOperationType.RuntimeCommand:
@@ -147,25 +144,28 @@ namespace TRobotWCFServiceLibrary.TRobotDrivers
             }
 
             string command = prefix + commandName;
-
             foreach (int argument in arguments)
             {
                 string temp = Convert.ToString(argument);
                 command += (" " + temp);
             }
-
-            ClearSerialPortBuffer();
-
             serialPort.WriteLine(command);
 
             if ((opType == WriteOperationType.RuntimeQuery) || (opType == WriteOperationType.GetConfig))
             {
                 string response = "";
-
                 while (response.Length == 0)
                 {
                     System.Threading.Thread.Sleep(10);
-                    response = serialPort.ReadLine();
+                    try
+                    {
+                        response = serialPort.ReadLine();
+                    }
+                    catch (Exception)
+                    {
+                        //ClearSerialPortBuffer();
+                        Disconnect();
+                    }
                     if (response.Contains("+"))
                     {
                         response = "";
@@ -175,15 +175,10 @@ namespace TRobotWCFServiceLibrary.TRobotDrivers
                         response = "";
                     }
                 }
-
-                ClearSerialPortBuffer();
-
                 int pos = response.IndexOf("=");
                 string reply = response.Substring(pos + 1);
                 return reply.Split(':');
             }
-
-            ClearSerialPortBuffer();
             return null;
         }
 
@@ -230,16 +225,6 @@ namespace TRobotWCFServiceLibrary.TRobotDrivers
         {
             List<int> args = new List<int>();
             return WriteOperation(opType, commandName, args);
-        }
-
-        private void ClearSerialPortBuffer()
-        {
-            if (!serialPort.IsOpen)
-            {
-                serialPort.Open();
-            }
-            serialPort.DiscardInBuffer();
-            serialPort.DiscardOutBuffer();
         }
 
         private void DriveInit()

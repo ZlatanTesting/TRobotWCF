@@ -23,7 +23,6 @@ namespace TRobotWCFServiceLibrary.TRobotDrivers
             {
                 Disconnect();
             }
-
             hokuyo = new UrgCtrl.UrgCtrl();
 
             bool connected = false;
@@ -52,14 +51,6 @@ namespace TRobotWCFServiceLibrary.TRobotDrivers
         public int[] GetData()
         {
             int[] distanceValuesFromHokuyo = new int[maxBufferSize];
-
-            return Capture(distanceValuesFromHokuyo);
-        }
-
-        public int[] GetData(int pointsNumber)
-        {
-            int[] distanceValuesFromHokuyo = new int[pointsNumber];
-
             return Capture(distanceValuesFromHokuyo);
         }
 
@@ -69,9 +60,7 @@ namespace TRobotWCFServiceLibrary.TRobotDrivers
             {
                 Connect();
             }
-
             hokuyo.Capture(distanceValuesFromHokuyo);
-
             return distanceValuesFromHokuyo;
         }
     }

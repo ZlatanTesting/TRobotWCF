@@ -92,11 +92,5 @@ namespace TRobotWCFServiceLibrary.TRobotDrivers
                 return false;
             }
         }
-
-        private void ClearSerialPortBuffer()
-        {
-            serialPort.DiscardInBuffer();
-            serialPort.DiscardOutBuffer();
-        }
     }
 }

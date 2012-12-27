@@ -10,33 +10,33 @@ namespace TRobotWCFServiceLibrary.DataReceivers
             switch (dataReceiver)
             {
                 case DataReceiver.Battery:
-                    {
-                        return new BatteryDataReceiver();
-                    }
+                {
+                    return new BatteryDataReceiver();
+                }
                 case DataReceiver.Hokuyo:
-                    {
-                        return new HokuyoSensorDataReceiver();
-                    }
+                {
+                    return new HokuyoSensorDataReceiver();
+                }
                 case DataReceiver.Sharp:
-                    {
-                        return new SharpSensorDataReceiver();
-                    }
+                {
+                    return new SharpSensorDataReceiver();
+                }
                 case DataReceiver.Mobot:
-                    {
-                        return new MobotSensorDataReceiver();
-                    }
+                {
+                    return new MobotSensorDataReceiver();
+                }
                 case DataReceiver.Encoder:
-                    {
-                        return new EncoderDataReceiver();
-                    }
+                {
+                    return new EncoderDataReceiver();
+                }
                 case DataReceiver.Temperature:
-                    {
-                        return new TemperatureDataReceiver();
-                    }
+                {
+                    return new TemperatureDataReceiver();
+                }
                 default:
-                    {
-                        throw new ArgumentException("Wrong DataReceiver type");
-                    }
+                {
+                    throw new ArgumentException("Wrong DataReceiver type");
+                }
             }
         }
     }

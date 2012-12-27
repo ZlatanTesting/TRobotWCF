@@ -22,6 +22,7 @@ namespace TRobotWCFServiceLibrary.DataProvider
             try
             {
                 roboteQ.Connect();
+                //roboteQ.SetDriverSpeed((int)driversData.Dictionary["leftWheelPower"], (int)driversData.Dictionary["rightWheelPower"]);
                 roboteQ.SetPower(driversData.Dictionary["leftWheelPower"], driversData.Dictionary["rightWheelPower"]);
             }
             catch (Exception)
