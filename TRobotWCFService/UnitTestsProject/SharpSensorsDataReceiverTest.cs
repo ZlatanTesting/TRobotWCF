@@ -6,8 +6,6 @@ using TRobotWCFServiceLibrary.Messages;
 
 namespace UnitTestsProject
 {
-    
-    
     /// <summary>
     /// This is a test class for SharpSensorDataReceiver and is intended to contain all SharpSensorDataReceiver Unit Tests.
     /// </summary>
