@@ -6,18 +6,29 @@ using System.IO.Ports;
 
 namespace TRobotWCFServiceLibrary.TRobotDrivers
 {
+    /// <summary>
+    /// Supports the Arduino.
+    /// </summary>
     internal class Arduino
     {
         private SerialPort serialPort;
         private string comPortName;
         private int baudRate;
 
+        /// <summary>
+        /// Constructs a Arduino instance.
+        /// </summary>
+        /// <param name="comPortName">Com port name for the Arduino</param>
+        /// <param name="baudRate">BaudRate for the com port</param>
         public Arduino(String comPortName, int baudRate)
         {
             this.baudRate = baudRate;
             this.comPortName = comPortName;
         }
 
+        /// <summary>
+        /// Connects to the Arduino.
+        /// </summary>
         public void Connect()
         {
             if (serialPort != null)
@@ -43,6 +54,9 @@ namespace TRobotWCFServiceLibrary.TRobotDrivers
             }
         }
 
+        /// <summary>
+        /// Disconnects from the Arduino.
+        /// </summary>
         public void Disconnect()
         {
             if (serialPort.IsOpen)
@@ -52,9 +66,9 @@ namespace TRobotWCFServiceLibrary.TRobotDrivers
         }
 
         /// <summary>
-        /// Returns volts from three Sharps in string table.
+        /// Gets data from the Sharp sensors.
         /// </summary>
-        /// <returns>String[] with volts</returns>
+        /// <returns>Volts from three Sharp sensors.</returns>
         public String[] GetSharpsData()
         {
             string returnMessage = "";

@@ -3,8 +3,16 @@ using TRobotWCFServiceLibrary.TRobotDrivers;
 
 namespace TRobotWCFServiceLibrary.DataReceivers
 {
+    /// <summary>
+    /// Factory of IDataReceivers.
+    /// </summary>
     internal class DataReceiverFactory
     {
+        /// <summary>
+        /// Factory method which returns IDataReceiver for selected device.
+        /// </summary>
+        /// <param name="dataReceiver">Selected device.</param>
+        /// <returns>IDataReceiver for selected device.</returns>
         public IDataReceiver GetDataReceiver(DataReceiver dataReceiver)
         {
             switch (dataReceiver)
@@ -19,7 +27,7 @@ namespace TRobotWCFServiceLibrary.DataReceivers
                 }
                 case DataReceiver.Sharp:
                 {
-                    return new SharpSensorDataReceiver();
+                    return new SharpSensorsDataReceiver();
                 }
                 case DataReceiver.Mobot:
                 {

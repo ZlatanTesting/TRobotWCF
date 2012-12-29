@@ -5,23 +5,28 @@ using TRobotWCFServiceLibrary.Utils;
 
 namespace TRobotWCFServiceLibrary.DataReceivers
 {
-    internal class SharpSensorDataReceiver : IDataReceiver
+    /// <summary>
+    /// Data Receiver from the TRobot's Sharp sensors.
+    /// </summary>
+    internal class SharpSensorsDataReceiver : IDataReceiver
     {
         private const int arduinoBaudRate = 9600;
         private const string arduinoComPort = "COM11";
         private Arduino arduino;
         private const string key = "distance";
 
-        public SharpSensorDataReceiver()
+        /// <summary>
+        /// Constructs a SharpSensorsDataReceiver instance.
+        /// </summary>
+        public SharpSensorsDataReceiver()
         {
             arduino = new Arduino(arduinoComPort, arduinoBaudRate);
         }
 
         /// <summary>
-        ///     This method returns distance for each sharp sensor in mm.
-        ///     Range for this sensor is (200 - 1500 mm).
-        ///     The keys for measured distance are 'distance1', 'distance2', 'distance3' for three sharps.
+        /// Receives data from the TRobot's Sharp sensors. Range for Sharp sensor is (200 - 1500 mm).
         /// </summary>
+        /// <returns>Distance in mm from the TRobot's Sharp sensors. The key for measured distance is "distance1", "distance2", "distance3" for three Sharp sensors.</returns>
         public Data ReceiveData()
         {
             Data data = new Data();

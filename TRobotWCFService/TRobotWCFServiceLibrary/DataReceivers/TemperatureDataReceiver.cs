@@ -6,6 +6,9 @@ using TRobotWCFServiceLibrary.Utils;
 
 namespace TRobotWCFServiceLibrary.DataReceivers
 {
+    /// <summary>
+    /// Data Receiver from the TRobot's thermometer.
+    /// </summary>
     internal class TemperatureDataReceiver : IDataReceiver
     {
         private const int roboteQBaudRate = 115200;
@@ -13,15 +16,18 @@ namespace TRobotWCFServiceLibrary.DataReceivers
         private Roboteq roboteQ;
         private const string key = "temperature";
 
+        /// <summary>
+        /// Constructs a TemperatureDataReceiver instance.
+        /// </summary>
         public TemperatureDataReceiver()
         {
             roboteQ = new Roboteq(roboteQComPort, roboteQBaudRate);
         }
 
         /// <summary>
-        ///     This method returns temperature of chipset in degrees C.
-        ///     The key for temperature value is 'temperature'.
+        /// Receives chipset's temperature from the TRobot's thermometer.
         /// </summary>
+        /// <returns>Temperature of chipset in degrees C. The key for temperature value is "temperature".</returns>
         public Data ReceiveData()
         {
             Data data = new Data();
@@ -29,8 +35,7 @@ namespace TRobotWCFServiceLibrary.DataReceivers
             try
             {
                 roboteQ.Connect();
-                String[] response = roboteQ.GetTemperature();
-                int degreesC = int.Parse(response.First());
+                int degreesC = int.Parse(roboteQ.GetTemperature());
 
                 data.Dictionary.Add(key, degreesC);
             }

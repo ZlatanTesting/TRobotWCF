@@ -1,10 +1,14 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Text;
 using System.IO.Ports;
 
 namespace TRobotWCFServiceLibrary.TRobotDrivers
 {
+    /// <summary>
+    /// Supports the RoboteQ.
+    /// </summary>
     internal class Roboteq
     {
         private SerialPort serialPort;
@@ -14,12 +18,20 @@ namespace TRobotWCFServiceLibrary.TRobotDrivers
         private const int _acceleration = 30; 
 	    private const int _deceleration = 100;
 
+        /// <summary>
+        /// Constructs a Roboteq instance.
+        /// </summary>
+        /// <param name="comPortName">Com port name for the RoboteQ</param>
+        /// <param name="baudRate">BaudRate for the com port</param>
         public Roboteq(String comPortName, int baudRate)
         {
             this.baudRate = baudRate;
             this.comPortName = comPortName;
         }
 
+        /// <summary>
+        /// Connects to the RoboteQ.
+        /// </summary>
         public void Connect()
         {
             if (serialPort != null)
@@ -50,6 +62,9 @@ namespace TRobotWCFServiceLibrary.TRobotDrivers
             DriveInit();
         }
 
+        /// <summary>
+        /// Disconnects from the RoboteQ.
+        /// </summary>
         public void Disconnect()
         {
             if (serialPort.IsOpen)
@@ -58,13 +73,18 @@ namespace TRobotWCFServiceLibrary.TRobotDrivers
             }
         }
 
+        /// <summary>
+        /// Sets motors power.
+        /// </summary>
+        /// <param name="leftWheel">Left wheel power in percents.</param>
+        /// <param name="rightWheel">Right wheel power in percents.</param>
         public void SetPower(double leftWheel, double rightWheel)
         {
             WriteOperation(WriteOperationType.RuntimeCommand, "M", (int)(leftWheel * 10), (int)(rightWheel * 10));
         }
 
         /// <summary>
-        /// Sets power of motors.
+        /// Sets motors power.
         /// </summary>
         /// <param name="leftWheel">Left wheel power in percents.</param>
         /// <param name="rightWheel">Right wheel power in percents.</param>
@@ -81,34 +101,34 @@ namespace TRobotWCFServiceLibrary.TRobotDrivers
         }
 
         /// <summary>
-        /// Returns speed in RPM.
+        /// Gets velocity from encoders.
         /// </summary>
-        /// <returns>Speed in RPM.</returns>
+        /// <returns>Velocity for left and right wheels in RPM.</returns>
         public String[] GetSpeed()
         {
             return WriteOperation(WriteOperationType.RuntimeQuery, "S", 0);
         }
 
         /// <summary>
-        /// Returns volts * 10.
+        /// Gets data from the batteries.
         /// </summary>
-        /// <returns>Volts * 10</returns>
-        public String[] GetBatteryVoltage()
+        /// <returns>Volts * 10 from batteries.</returns>
+        public String GetBatteryVoltage()
         {
             List<int> channelNumber = new List<int>();
             channelNumber.Add(2);
-            return WriteOperation(WriteOperationType.RuntimeQuery, "V", channelNumber);
+            return WriteOperation(WriteOperationType.RuntimeQuery, "V", channelNumber).First();
         }
 
         /// <summary>
-        /// Returns value in degrees C.
+        /// Gets chipset's temperature from the thermometer.
         /// </summary>
-        /// <returns>degrees C</returns>
-        public String[] GetTemperature()
+        /// <returns>Temperature of chipset in degrees C.</returns>
+        public String GetTemperature()
         {
             List<int> channelNumber = new List<int>();
             channelNumber.Add(2);
-            return WriteOperation(WriteOperationType.RuntimeQuery, "T", channelNumber);
+            return WriteOperation(WriteOperationType.RuntimeQuery, "T", channelNumber).First();
         }
 
         /// <summary>

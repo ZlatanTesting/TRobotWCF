@@ -59,7 +59,7 @@
     <Compile Include="EncoderDataReceiverTest.cs" />
     <Compile Include="HokuyoSensorDataReceiverTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SharpSensorDataReceiverTest.cs" />
+    <Compile Include="SharpSensorsDataReceiverTest.cs" />
     <Compile Include="TemperatureDataReceiverTest.cs" />
   </ItemGroup>
   <ItemGroup>

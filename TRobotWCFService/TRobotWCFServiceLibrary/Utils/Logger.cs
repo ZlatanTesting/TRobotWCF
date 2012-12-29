@@ -6,8 +6,15 @@ using System.IO;
 
 namespace TRobotWCFServiceLibrary.Utils
 {
+    /// <summary>
+    /// Static Logger for logging exceptions to txt file.
+    /// </summary>
     public static class Logger
     {
+        /// <summary>
+        /// Logs information about exception to ExceptionLog.txt file.
+        /// </summary>
+        /// <param name="e">Exception to log.</param>
         public static void Log(Exception e)
         {
             string path = Directory.GetCurrentDirectory() + @"/ExceptionLog.txt";

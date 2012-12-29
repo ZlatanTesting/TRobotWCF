@@ -5,6 +5,9 @@ using TRobotWCFServiceLibrary.Utils;
 
 namespace TRobotWCFServiceLibrary.DataReceivers
 {
+    /// <summary>
+    /// Data Receiver from the TRobot's encoders.
+    /// </summary>
     internal class EncoderDataReceiver : IDataReceiver
     {
         private const int roboteQBaudRate = 115200;
@@ -14,16 +17,18 @@ namespace TRobotWCFServiceLibrary.DataReceivers
         private const double hoursInMinute = 1.0/60;
         private const string key = "speed";
 
+        /// <summary>
+        /// Constructs a EncoderDataReceiver instance.
+        /// </summary>
         public EncoderDataReceiver()
         {
             roboteQ = new Roboteq(roboteQComPort, roboteQBaudRate);
         }
 
         /// <summary>
-        ///     This method returns drivers velocity.
-        ///     Range for encoder is (0 - 3 km/h).
-        ///     The key for measured speed is 'speed'.
+        /// Receives data from the TRobot's encoders. Range for encoders is around (0 - 3.06 km/h).
         /// </summary>
+        /// <returns>Velocity of Trobot in km/h. The key for measured velocity is "speed".</returns>
         public Data ReceiveData()
         {
             Data data = new Data();

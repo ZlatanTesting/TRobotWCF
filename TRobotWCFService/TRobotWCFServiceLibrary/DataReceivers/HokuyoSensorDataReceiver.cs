@@ -6,6 +6,9 @@ using TRobotWCFServiceLibrary.Utils;
 
 namespace TRobotWCFServiceLibrary.DataReceivers
 {
+    /// <summary>
+    /// Data Receiver from the TRobot's Hokuyo sensor.
+    /// </summary>
     internal class HokuyoSensorDataReceiver : IDataReceiver
     {
         private const int hokuyoBaudRate = 19200;
@@ -13,17 +16,19 @@ namespace TRobotWCFServiceLibrary.DataReceivers
         private Hokuyo hokuyo;
         private const String key = "distance";
 
+        /// <summary>
+        /// Constructs a HokuyoSensorDataReceiver instance.
+        /// </summary>
         public HokuyoSensorDataReceiver()
         {
             hokuyo = new Hokuyo(hokuyoComPort, hokuyoBaudRate);
         }
 
         /// <summary>
-        ///     This method returns distance values in mm.
-        ///     Range for this sensor is (20 - 4000 mm).
-        ///     Scan area is 240 degrees semicircle. Pitch angle is 0.36 degree and sensor outputs the distace measured at every point (683 steps).
-        ///     The key for measured distance is 'distance0', 'distance1' ... 'distance682'.
+        /// Receives data from the TRobot's Hokuyo sensor. Range for Hokuyo sensor is around (20 - 4000 mm). 
+        /// Scan area is 240 degrees semicircle. Sensor outputs the distace measured at 682 points.
         /// </summary>
+        /// <returns>Distance in 682 points in mm from the TRobot's Hokuyo sensor. The key for measured distance is "distance0", "distance1", ..., "distance681".</returns>
         public Data ReceiveData()
         {
             Data data = new Data();

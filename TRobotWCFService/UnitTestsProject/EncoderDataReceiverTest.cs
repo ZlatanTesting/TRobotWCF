@@ -6,24 +6,43 @@ using TRobotWCFServiceLibrary.Messages;
 namespace UnitTestsProject
 {
     /// <summary>
-    ///This is a test class for EncoderDataReceiverTest and is intended
-    ///to contain all EncoderDataReceiverTest Unit Tests
-    ///</summary>
+    /// This is a test class for EncoderDataReceiver and is intended to contain all EncoderDataReceiver Unit Tests.
+    /// </summary>
     [TestClass]
     public class EncoderDataReceiverTest
     {
-        private const string key = "speed";
+        /// <summary>
+        /// A test which tests if received value is not null.
+        /// </summary>
+        [TestMethod]
+        public void EncoderReceiveDataIsNotNullTest()
+        {
+            //  Given
+            EncoderDataReceiver ecoderDataReceiver = new EncoderDataReceiver();
+            string key = "speed";
+
+            //  When
+            double velocity = ecoderDataReceiver.ReceiveData().Dictionary[key];
+
+            //  Then
+            Assert.IsNotNull(velocity);
+        }
 
         /// <summary>
-        ///A test for ReceiveData - isNotNull
-        ///</summary>
+        /// A test which tests if received data has valid device type.
+        /// </summary>
         [TestMethod]
-        public void EncoderReceiveDataTest()
+        public void EncoderReceiveDataHasValidDeviceTypeTest()
         {
+            //  Given 
             EncoderDataReceiver ecoderDataReceiver = new EncoderDataReceiver();
-            Data actual = ecoderDataReceiver.ReceiveData();
+            DataReceiver expectedDataReceiver = DataReceiver.Encoder;
 
-            Assert.IsNotNull(actual.Dictionary[key]);
+            //  When
+            DataReceiver actualDataReceiver = ecoderDataReceiver.ReceiveData().DataReceiverType;
+
+            //  Then
+            Assert.AreEqual(expectedDataReceiver, actualDataReceiver);
         }
     }
 }

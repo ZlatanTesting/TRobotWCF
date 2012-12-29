@@ -3,6 +3,9 @@ using System;
 
 namespace TRobotWCFServiceLibrary.TRobotDrivers
 {
+    /// <summary>
+    /// Supports the Hokuyo sensor.
+    /// </summary>
     internal class Hokuyo
     {
         private UrgCtrl.UrgCtrl hokuyo;
@@ -10,13 +13,20 @@ namespace TRobotWCFServiceLibrary.TRobotDrivers
         private int comPort;
         private const int maxBufferSize = 682;
 
-
+        /// <summary>
+        /// Constructs a Hokuyo instance.
+        /// </summary>
+        /// <param name="comPort">Com port number for the Hokuyo</param>
+        /// <param name="baudRate">BaudRate for the com port</param>
         public Hokuyo(int comPort, int baudRate)
         {
             this.baudRate = baudRate;
             this.comPort = comPort;
         }
 
+        /// <summary>
+        /// Connects to the Hokuyo sensor.
+        /// </summary>
         public void Connect()
         {
             if (hokuyo != null)
@@ -40,6 +50,9 @@ namespace TRobotWCFServiceLibrary.TRobotDrivers
             }
         }
 
+        /// <summary>
+        /// Disconnects from the Hokuyo sensor.
+        /// </summary>
         public void Disconnect()
         {
             if (hokuyo.IsConnected())
@@ -48,6 +61,10 @@ namespace TRobotWCFServiceLibrary.TRobotDrivers
             }
         }
 
+        /// <summary>
+        /// Gets distance data from the Hokuyo sensor.
+        /// </summary>
+        /// <returns>Distance in 682 points in mm from the Hokuyo sensor.</returns>
         public int[] GetData()
         {
             int[] distanceValuesFromHokuyo = new int[maxBufferSize];

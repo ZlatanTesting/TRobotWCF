@@ -55,7 +55,7 @@
     <Compile Include="DataReceivers\HokuyoSensorDataReceiver.cs" />
     <Compile Include="DataReceivers\IDataReceiver.cs" />
     <Compile Include="DataReceivers\MobotSensorDataReceiver.cs" />
-    <Compile Include="DataReceivers\SharpSensorDataReceiver.cs" />
+    <Compile Include="DataReceivers\SharpSensorsDataReceiver.cs" />
     <Compile Include="DataReceivers\TemperatureDataReceiver.cs" />
     <Compile Include="IService1.cs" />
     <Compile Include="Messages\Data.cs" />

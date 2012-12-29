@@ -5,6 +5,9 @@ using TRobotWCFServiceLibrary.Utils;
 
 namespace TRobotWCFServiceLibrary.DataProvider
 {
+    /// <summary>
+    /// Data Provider for the TRobot's encoders.
+    /// </summary>
     class EncoderDataProvider:IDataProvider
     {
         private const int roboteQBaudRate = 115200;
@@ -12,12 +15,19 @@ namespace TRobotWCFServiceLibrary.DataProvider
         private Roboteq roboteQ;
         private Data driversData;
 
+        /// <summary>
+        /// Constructs a EncoderDataProvider instance.
+        /// </summary>
+        /// <param name="driversData">Data object with information about left and right wheel power. It must be in the Dictionary wiht keys: "leftWheelPower" and "rightWheelPower".</param>
         public EncoderDataProvider(Data driversData) 
         {
             this.driversData = driversData;
             roboteQ = new Roboteq(roboteQComPort, roboteQBaudRate);
         }
 
+        /// <summary>
+        /// Provides speed data to the TRobot's encoders.
+        /// </summary>
         public void ProvideData()
         {
             try
