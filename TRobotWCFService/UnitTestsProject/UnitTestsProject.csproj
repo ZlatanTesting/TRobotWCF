@@ -56,6 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BatteryDataReceiverTest.cs" />
+    <Compile Include="DataReceiverFactoryTest.cs" />
     <Compile Include="EncoderDataReceiverTest.cs" />
     <Compile Include="HokuyoSensorDataReceiverTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -1,8 +1,5 @@
 ﻿using TRobotWCFServiceLibrary.DataReceivers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using TRobotWCFServiceLibrary.TRobotDrivers;
-using TRobotWCFServiceLibrary.Messages;
 
 namespace UnitTestsProject
 {

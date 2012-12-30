@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using TRobotWCFServiceLibrary.Messages;
 using TRobotWCFServiceLibrary.TRobotDrivers;
 using TRobotWCFServiceLibrary.Utils;
