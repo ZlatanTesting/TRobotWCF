@@ -32,7 +32,7 @@ namespace TRobotWCFServiceLibrary.DataReceivers
         public Data ReceiveData()
         {
             Data data = new Data();
-            data.DataReceiverType = DataReceiver.Hokuyo;
+            data.SelectedDeviceType = SelectedDevice.Hokuyo;
             try
             {
                 hokuyo.Connect();

@@ -25,9 +25,21 @@ namespace TRobotWCFServiceLibrary
         /// <param name="data">Data with selected device type and values to send to selected device.</param>
         public void SendData(Data data)
         {
-            IDataProvider dataProvider = new EncoderDataProvider(data);
-
-            dataProvider.ProvideData();
+            switch (data.SelectedDeviceType)
+            {
+                case SelectedDevice.Drive:
+                {
+                    IDataProvider dataProvider = new EncoderDataProvider(data);
+                    dataProvider.ProvideData();
+                    break;
+                }
+                case SelectedDevice.DriveInit:
+                {
+                    IDataProvider dataProvider = new DriveInitializeDataProvider();
+                    dataProvider.ProvideData();
+                    break;
+                }
+            } 
         }
 
         /// <summary>
@@ -37,7 +49,7 @@ namespace TRobotWCFServiceLibrary
         /// <returns>Data with received values for selected device type.</returns>
         public Data LoadData(Data request)
         {
-            IDataReceiver dataReceiver = dataReceiverFactory.GetDataReceiver(request.DataReceiverType);
+            IDataReceiver dataReceiver = dataReceiverFactory.GetDataReceiver(request.SelectedDeviceType);
 
             Data response = dataReceiver.ReceiveData();
 

@@ -17,7 +17,7 @@ namespace UnitTestsProject
         {
             //  Given
             DataReceiverFactory dataReceiverFactory = new DataReceiverFactory();
-            DataReceiver dataReceiverType = DataReceiver.Battery;
+            SelectedDevice dataReceiverType = SelectedDevice.Battery;
 
             //  When
             IDataReceiver dataReceiver = dataReceiverFactory.GetDataReceiver(dataReceiverType);
@@ -34,7 +34,7 @@ namespace UnitTestsProject
         {
             //  Given
             DataReceiverFactory dataReceiverFactory = new DataReceiverFactory();
-            DataReceiver dataReceiverType = DataReceiver.Encoder;
+            SelectedDevice dataReceiverType = SelectedDevice.Encoder;
 
             //  When
             IDataReceiver dataReceiver = dataReceiverFactory.GetDataReceiver(dataReceiverType);
@@ -51,7 +51,7 @@ namespace UnitTestsProject
         {
             //  Given
             DataReceiverFactory dataReceiverFactory = new DataReceiverFactory();
-            DataReceiver dataReceiverType = DataReceiver.Hokuyo;
+            SelectedDevice dataReceiverType = SelectedDevice.Hokuyo;
 
             //  When
             IDataReceiver dataReceiver = dataReceiverFactory.GetDataReceiver(dataReceiverType);
@@ -68,7 +68,7 @@ namespace UnitTestsProject
         {
             //  Given
             DataReceiverFactory dataReceiverFactory = new DataReceiverFactory();
-            DataReceiver dataReceiverType = DataReceiver.Sharp;
+            SelectedDevice dataReceiverType = SelectedDevice.Sharp;
 
             //  When
             IDataReceiver dataReceiver = dataReceiverFactory.GetDataReceiver(dataReceiverType);
@@ -85,7 +85,7 @@ namespace UnitTestsProject
         {
             //  Given
             DataReceiverFactory dataReceiverFactory = new DataReceiverFactory();
-            DataReceiver dataReceiverType = DataReceiver.Temperature;
+            SelectedDevice dataReceiverType = SelectedDevice.Temperature;
 
             //  When
             IDataReceiver dataReceiver = dataReceiverFactory.GetDataReceiver(dataReceiverType);

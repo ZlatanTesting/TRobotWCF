@@ -46,15 +46,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataProvider\DriveInitializeDataProvider.cs" />
     <Compile Include="DataProvider\EncoderDataProvider.cs" />
     <Compile Include="DataProvider\IDataProvider.cs" />
     <Compile Include="DataReceivers\BatteryDataReceiver.cs" />
-    <Compile Include="DataReceivers\DataReceiverEnum.cs" />
+    <Compile Include="DataReceivers\SelectedDeviceEnum.cs" />
     <Compile Include="DataReceivers\DataReceiverFactory.cs" />
     <Compile Include="DataReceivers\EncoderDataReceiver.cs" />
     <Compile Include="DataReceivers\HokuyoSensorDataReceiver.cs" />
     <Compile Include="DataReceivers\IDataReceiver.cs" />
     <Compile Include="DataReceivers\MobotSensorDataReceiver.cs" />
+    <Compile Include="DataReceivers\NullDataReceiver.cs" />
     <Compile Include="DataReceivers\SharpSensorsDataReceiver.cs" />
     <Compile Include="DataReceivers\TemperatureDataReceiver.cs" />
     <Compile Include="IService1.cs" />

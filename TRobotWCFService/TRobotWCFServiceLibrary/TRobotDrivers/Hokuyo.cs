@@ -1,4 +1,5 @@
 ﻿using System;
+using TRobotWCFServiceLibrary.Utils;
 
 namespace TRobotWCFServiceLibrary.TRobotDrivers
 {
@@ -34,18 +35,13 @@ namespace TRobotWCFServiceLibrary.TRobotDrivers
             }
             hokuyo = new UrgCtrl.UrgCtrl();
 
-            bool connected = false;
-            while (!connected)
+            try
             {
-                try
-                {
-                    hokuyo.Connect(comPort, baudRate);
-                    connected = true;
-                }
-                catch (Exception)
-                {
-                    connected = false;
-                }
+                hokuyo.Connect(comPort, baudRate);
+            }
+            catch (Exception e)
+            {
+                Logger.Log(e);
             }
         }
 

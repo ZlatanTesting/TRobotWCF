@@ -85,10 +85,10 @@ namespace UnitTestsProject
         {
             //  Given 
             HokuyoSensorDataReceiver hokuyoSensorDataReceiver = new HokuyoSensorDataReceiver();
-            DataReceiver expectedDataReceiver = DataReceiver.Hokuyo;
+            SelectedDevice expectedDataReceiver = SelectedDevice.Hokuyo;
 
             //  When
-            DataReceiver actualDataReceiver = hokuyoSensorDataReceiver.ReceiveData().DataReceiverType;
+            SelectedDevice actualDataReceiver = hokuyoSensorDataReceiver.ReceiveData().SelectedDeviceType;
 
             //  Then
             Assert.AreEqual(expectedDataReceiver, actualDataReceiver);

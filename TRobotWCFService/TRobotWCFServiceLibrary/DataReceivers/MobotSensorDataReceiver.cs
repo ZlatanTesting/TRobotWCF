@@ -25,7 +25,7 @@ namespace TRobotWCFServiceLibrary.DataReceivers
         public Data ReceiveData()
         {
             Data data = new Data();
-            data.DataReceiverType = DataReceiver.Mobot;
+            data.SelectedDeviceType = SelectedDevice.Mobot;
             try
             {
                 arduino.Connect();

@@ -3,13 +3,16 @@
     /// <summary>
     /// Enum of available devices.
     /// </summary>
-    public enum DataReceiver
+    public enum SelectedDevice
     {
         Battery,
         Hokuyo,
         Sharp,
         Mobot,
         Encoder,
-        Temperature
+        Temperature,
+        Drive,
+        DriveInit,
+        Null
     };
 }

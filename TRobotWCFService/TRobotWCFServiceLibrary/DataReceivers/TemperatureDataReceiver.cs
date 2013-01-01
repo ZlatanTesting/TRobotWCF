@@ -30,7 +30,7 @@ namespace TRobotWCFServiceLibrary.DataReceivers
         public Data ReceiveData()
         {
             Data data = new Data();
-            data.DataReceiverType = DataReceiver.Temperature;
+            data.SelectedDeviceType = SelectedDevice.Temperature;
             try
             {
                 roboteQ.Connect();

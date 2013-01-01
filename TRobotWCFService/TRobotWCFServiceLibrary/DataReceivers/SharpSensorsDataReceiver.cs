@@ -30,7 +30,7 @@ namespace TRobotWCFServiceLibrary.DataReceivers
         public Data ReceiveData()
         {
             Data data = new Data();
-            data.DataReceiverType = DataReceiver.Sharp;
+            data.SelectedDeviceType = SelectedDevice.Sharp;
             try
             {
                 arduino.Connect();

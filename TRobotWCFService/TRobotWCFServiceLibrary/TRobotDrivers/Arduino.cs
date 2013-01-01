@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.IO.Ports;
+using TRobotWCFServiceLibrary.Utils;
 
 namespace TRobotWCFServiceLibrary.TRobotDrivers
 {
@@ -37,18 +38,13 @@ namespace TRobotWCFServiceLibrary.TRobotDrivers
             serialPort = new SerialPort(comPortName, baudRate);
             serialPort.NewLine = "$";
 
-            bool connected = false;
-            while (!connected)
+            try
             {
-                try
-                {
-                    serialPort.Open();
-                    connected = true;
-                }
-                catch (Exception)
-                {
-                    connected = false;
-                }
+                serialPort.Open();
+            }
+             catch (Exception e)
+            {
+                Logger.Log(e);
             }
         }
 

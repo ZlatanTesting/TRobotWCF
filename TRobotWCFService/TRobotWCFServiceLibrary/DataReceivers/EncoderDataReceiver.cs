@@ -32,18 +32,18 @@ namespace TRobotWCFServiceLibrary.DataReceivers
         public Data ReceiveData()
         {
             Data data = new Data();
-            data.DataReceiverType = DataReceiver.Encoder;
+            data.SelectedDeviceType = SelectedDevice.Encoder;
             try
             {
                 roboteQ.Connect();
                 String[] response = roboteQ.GetSpeed();
 
                 double velocity = ((double.Parse(response[0]) + Double.Parse(response[1])) / 2) * (wheelCircuitInKm / hoursInMinute);
-                data.Dictionary.Add(key, velocity);   
+                data.Dictionary.Add(key, velocity);
             }
             catch (Exception e)
             {
-                Logger.Log(e);
+                //Logger.Log(e);
             }
             finally
             {

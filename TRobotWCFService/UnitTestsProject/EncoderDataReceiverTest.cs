@@ -34,10 +34,10 @@ namespace UnitTestsProject
         {
             //  Given 
             EncoderDataReceiver ecoderDataReceiver = new EncoderDataReceiver();
-            DataReceiver expectedDataReceiver = DataReceiver.Encoder;
+            SelectedDevice expectedDataReceiver = SelectedDevice.Encoder;
 
             //  When
-            DataReceiver actualDataReceiver = ecoderDataReceiver.ReceiveData().DataReceiverType;
+            SelectedDevice actualDataReceiver = ecoderDataReceiver.ReceiveData().SelectedDeviceType;
 
             //  Then
             Assert.AreEqual(expectedDataReceiver, actualDataReceiver);

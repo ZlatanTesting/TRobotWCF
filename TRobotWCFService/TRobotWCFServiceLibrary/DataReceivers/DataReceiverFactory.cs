@@ -1,4 +1,6 @@
 ﻿using System;
+using TRobotWCFServiceLibrary.Utils;
+using TRobotWCFServiceLibrary.DataProvider;
 
 namespace TRobotWCFServiceLibrary.DataReceivers
 {
@@ -12,37 +14,38 @@ namespace TRobotWCFServiceLibrary.DataReceivers
         /// </summary>
         /// <param name="dataReceiver">Selected device.</param>
         /// <returns>IDataReceiver for selected device.</returns>
-        public IDataReceiver GetDataReceiver(DataReceiver dataReceiver)
+        public IDataReceiver GetDataReceiver(SelectedDevice dataReceiver)
         {
             switch (dataReceiver)
             {
-                case DataReceiver.Battery:
+                case SelectedDevice.Battery:
                 {
                     return new BatteryDataReceiver();
                 }
-                case DataReceiver.Hokuyo:
+                case SelectedDevice.Hokuyo:
                 {
                     return new HokuyoSensorDataReceiver();
                 }
-                case DataReceiver.Sharp:
+                case SelectedDevice.Sharp:
                 {
                     return new SharpSensorsDataReceiver();
                 }
-                case DataReceiver.Mobot:
+                case SelectedDevice.Mobot:
                 {
                     return new MobotSensorDataReceiver();
                 }
-                case DataReceiver.Encoder:
+                case SelectedDevice.Encoder:
                 {
                     return new EncoderDataReceiver();
                 }
-                case DataReceiver.Temperature:
+                case SelectedDevice.Temperature:
                 {
                     return new TemperatureDataReceiver();
                 }
                 default:
                 {
-                    throw new ArgumentException("Wrong DataReceiver type");
+                    Logger.Log(new ArgumentException("Wrong DataReceiver type"));
+                    return new NullDataReceiver();
                 }
             }
         }

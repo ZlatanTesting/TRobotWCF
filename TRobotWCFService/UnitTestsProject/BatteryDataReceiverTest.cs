@@ -53,10 +53,10 @@ namespace UnitTestsProject
         {
             //  Given 
             BatteryDataReceiver batteryDataReceiver = new BatteryDataReceiver();
-            DataReceiver expectedDataReceiver = DataReceiver.Battery;
+            SelectedDevice expectedDataReceiver = SelectedDevice.Battery;
 
             //  When
-            DataReceiver actualDataReceiver = batteryDataReceiver.ReceiveData().DataReceiverType;
+            SelectedDevice actualDataReceiver = batteryDataReceiver.ReceiveData().SelectedDeviceType;
 
             //  Then
             Assert.AreEqual(expectedDataReceiver, actualDataReceiver);

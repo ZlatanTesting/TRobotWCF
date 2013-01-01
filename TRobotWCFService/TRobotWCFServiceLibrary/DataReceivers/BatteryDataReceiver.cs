@@ -30,14 +30,25 @@ namespace TRobotWCFServiceLibrary.DataReceivers
         public Data ReceiveData()
         {
             Data data = new Data();
-            data.DataReceiverType = DataReceiver.Battery;
+            data.SelectedDeviceType = SelectedDevice.Battery;
             try
             {
                 roboteQ.Connect();
                 String response = roboteQ.GetBatteryVoltage();
 
                 int chargeInPercets = (int)(Double.Parse(response) * 6.25 - 425);
-                data.Dictionary.Add(key, chargeInPercets);
+                if (chargeInPercets < 0)
+                {
+                    data.Dictionary.Add(key, 0);
+                }
+                else if (chargeInPercets > 100)
+                {
+                    data.Dictionary.Add(key, 100);
+                }
+                else
+                {
+                    data.Dictionary.Add(key, chargeInPercets);
+                }
             }
             catch (Exception e)
             {

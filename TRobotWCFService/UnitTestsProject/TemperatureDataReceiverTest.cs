@@ -34,10 +34,10 @@ namespace UnitTestsProject
         {
             //  Given 
             TemperatureDataReceiver temperatureDataReceiver = new TemperatureDataReceiver();
-            DataReceiver expectedDataReceiver = DataReceiver.Temperature;
+            SelectedDevice expectedDataReceiver = SelectedDevice.Temperature;
 
             //  When
-            DataReceiver actualDataReceiver = temperatureDataReceiver.ReceiveData().DataReceiverType;
+            SelectedDevice actualDataReceiver = temperatureDataReceiver.ReceiveData().SelectedDeviceType;
 
             //  Then
             Assert.AreEqual(expectedDataReceiver, actualDataReceiver);

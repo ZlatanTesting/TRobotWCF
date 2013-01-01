@@ -28,6 +28,6 @@ namespace TRobotWCFServiceLibrary.Messages
         /// Property to get or set selected device type.
         /// </summary>
         [DataMember]
-        public DataReceiver DataReceiverType { get; set; }
+        public SelectedDevice SelectedDeviceType { get; set; }
     }
 }

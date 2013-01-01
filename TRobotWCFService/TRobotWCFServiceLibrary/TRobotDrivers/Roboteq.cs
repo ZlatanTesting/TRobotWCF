@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Text;
 using System.IO.Ports;
+using TRobotWCFServiceLibrary.Utils;
 
 namespace TRobotWCFServiceLibrary.TRobotDrivers
 {
@@ -46,20 +47,23 @@ namespace TRobotWCFServiceLibrary.TRobotDrivers
             serialPort.ReadTimeout = 50;
             serialPort.WriteTimeout = 50;
 
-            bool connected = false;
-            while (!connected)
+            int counter = 0;
+            while (counter < 3)
             {
                 try
                 {
                     serialPort.Open();
-                    connected = true;
+                    counter = 3;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-                    connected = false;
+                    counter++;
+                    if (counter == 3)
+                    {
+                        Logger.Log(e);
+                    }
                 }
             }
-            DriveInit();
         }
 
         /// <summary>
@@ -241,7 +245,10 @@ namespace TRobotWCFServiceLibrary.TRobotDrivers
             return WriteOperation(opType, commandName, args);
         }
 
-        private void DriveInit()
+        /// <summary>
+        /// Initializes encoders.
+        /// </summary>
+        public void DriveInit()
         {
             // All motors in open-loop speed - default
             WriteOperation(WriteOperationType.SetConfig, "MMOD", 1, 0);

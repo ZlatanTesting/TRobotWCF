@@ -128,10 +128,10 @@ namespace UnitTestsProject
         {
             //  Given 
             SharpSensorsDataReceiver sharpSensorsDataReceiver = new SharpSensorsDataReceiver();
-            DataReceiver expectedDataReceiver = DataReceiver.Sharp;
+            SelectedDevice expectedDataReceiver = SelectedDevice.Sharp;
 
             //  When
-            DataReceiver actualDataReceiver = sharpSensorsDataReceiver.ReceiveData().DataReceiverType;
+            SelectedDevice actualDataReceiver = sharpSensorsDataReceiver.ReceiveData().SelectedDeviceType;
 
             //  Then
             Assert.AreEqual(expectedDataReceiver, actualDataReceiver);
