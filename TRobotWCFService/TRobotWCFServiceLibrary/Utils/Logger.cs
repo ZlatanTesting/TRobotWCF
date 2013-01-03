@@ -15,7 +15,6 @@ namespace TRobotWCFServiceLibrary.Utils
         public static void Log(Exception e)
         {
             string path = Directory.GetCurrentDirectory() + @"/ExceptionLog.txt";
-
             if (File.Exists(path))
             {
                 using (StreamWriter log = File.AppendText(path))

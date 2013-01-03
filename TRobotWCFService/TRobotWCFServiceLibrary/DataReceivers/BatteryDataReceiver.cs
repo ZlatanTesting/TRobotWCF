@@ -14,6 +14,8 @@ namespace TRobotWCFServiceLibrary.DataReceivers
         private const string roboteQComPort = "COM9";
         private Roboteq roboteQ;
         private const string key = "charge";
+        private const int uMin = 68;
+        private const int uMax = 84;
 
         /// <summary>
         /// Constructs a BatteryDataReceiver instance.
@@ -36,7 +38,7 @@ namespace TRobotWCFServiceLibrary.DataReceivers
                 roboteQ.Connect();
                 String response = roboteQ.GetBatteryVoltage();
 
-                int chargeInPercets = (int)(Double.Parse(response) * 6.25 - 425);
+                int chargeInPercets = (int)(Double.Parse(response)-uMin)*100/(uMax-uMin);
                 if (chargeInPercets < 0)
                 {
                     data.Dictionary.Add(key, 0);

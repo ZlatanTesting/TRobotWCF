@@ -131,7 +131,7 @@ namespace TRobotWCFServiceLibrary.TRobotDrivers
         public String GetTemperature()
         {
             List<int> channelNumber = new List<int>();
-            channelNumber.Add(2);
+            channelNumber.Add(1);
             return WriteOperation(WriteOperationType.RuntimeQuery, "T", channelNumber).First();
         }
 
