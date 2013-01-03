@@ -85,6 +85,26 @@ namespace TRobotWCFServiceLibrary.TRobotDrivers
             return sharps;
         }
 
+        /// <summary>
+        /// Gets data from the Mobot sensor.
+        /// </summary>
+        /// <returns>Distance form Mobot sensor in mm.</returns>
+        public String GetMobotData()
+        {
+            string returnMessage = "";
+
+            while (returnMessage.Length != 36 || !TryToParse(returnMessage))
+            {
+                returnMessage = serialPort.ReadLine();
+                if (returnMessage.Contains('#'))
+                {
+                    int length = returnMessage.Length - 1;
+                    returnMessage = returnMessage.Substring(1, length);
+                }
+            }
+            return returnMessage.Substring(24, 4);
+        }
+
         private bool TryToParse(String str)
         {
             try

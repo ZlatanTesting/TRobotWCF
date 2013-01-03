@@ -5,6 +5,9 @@ using System;
 
 namespace TRobotWCFServiceLibrary.DataReceivers
 {
+    /// <summary>
+    /// Data Receiver from the TRobot's Mobot sensor.
+    /// </summary>
     internal class MobotSensorDataReceiver : IDataReceiver
     {
         private const int arduinoBaudRate = 9600;
@@ -12,16 +15,18 @@ namespace TRobotWCFServiceLibrary.DataReceivers
         private Arduino arduino;
         private const string key = "distance";
 
+        /// <summary>
+        /// Constructs a HokuyoSensorDataReceiver instance.
+        /// </summary>
         public MobotSensorDataReceiver()
         {
             arduino = new Arduino(arduinoComPort, arduinoBaudRate);
         }
 
         /// <summary>
-        ///     This is mock method. This method always returns 200cm.
-        ///     Range for this sensor is (5 - 350 cm).
-        ///     The key for measured distance is 'distance'.
+        /// Receives data from the TRobot's Mobot sensor. Range for Mobot sensor is (50 - 3500 mm).
         /// </summary>
+        /// <returns>Distance in mm from the TRobot's Mobot sensors. The key for measured distance is "distance"</returns>
         public Data ReceiveData()
         {
             Data data = new Data();
@@ -29,8 +34,9 @@ namespace TRobotWCFServiceLibrary.DataReceivers
             try
             {
                 arduino.Connect();
+                String distance = arduino.GetMobotData();
 
-                data.Dictionary.Add(key, 200);
+                data.Dictionary.Add(key, double.Parse(distance));
             }
             catch (Exception e)
             {

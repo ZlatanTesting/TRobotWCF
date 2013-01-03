@@ -250,32 +250,35 @@ namespace TRobotWCFServiceLibrary.TRobotDrivers
         /// </summary>
         public void DriveInit()
         {
-            // All motors in open-loop speed - default
+            //  All motors in open-loop speed - default
             WriteOperation(WriteOperationType.SetConfig, "MMOD", 1, 0);
             WriteOperation(WriteOperationType.SetConfig, "MMOD", 2, 0);
         	
-            // turn off command echo
+            // Turn off command echo
             WriteOperation(WriteOperationType.SetConfig, "ECHOF", 1);
 
-            // encoders configured as feedbacks
+            // Encoders configured as feedbacks
             WriteOperation(WriteOperationType.SetConfig, "EMOD", 1, 18);
             WriteOperation(WriteOperationType.SetConfig, "EMOD", 2, 34);
 
 
-            // set encoder PPR
+            //  Set encoder PPR
             WriteOperation(WriteOperationType.SetConfig, "EPPR", 1, _encoderCpr / 4);
             WriteOperation(WriteOperationType.SetConfig, "EPPR", 2, _encoderCpr / 4);
 
-            // disable watchdog
+            //  Disable watchdog ?
             WriteOperation(WriteOperationType.SetConfig, "RWD", 1000, 1000);
 
-            //set acceleration and deceleration
+            //  Set acceleration and deceleration
             WriteOperation(WriteOperationType.RuntimeCommand, "AC", 1, _acceleration);
             WriteOperation(WriteOperationType.RuntimeCommand, "AC", 2, _acceleration);
             WriteOperation(WriteOperationType.RuntimeCommand, "DC", 1, _deceleration);
             WriteOperation(WriteOperationType.RuntimeCommand, "DC", 2, _deceleration);
+            
+            //  Sometimes after AC and DC commands encoders is starting
+            SetPower(0, 0);
 
-            // disable integral tracking error
+            //  Disable integral tracking error
             WriteOperation(WriteOperationType.SetConfig, "CLERD", 1, 0);
             WriteOperation(WriteOperationType.SetConfig, "CLERD", 2, 0);
         }
