@@ -72,8 +72,33 @@ namespace TRobotWCFServiceLibrary.TRobotDrivers
             {
                 Connect();
             }
-            hokuyo.Capture(distanceValuesFromHokuyo);
+            bool validData = false;
+            while (!validData)
+            {
+                hokuyo.Capture(distanceValuesFromHokuyo);
+                validData = ValidateData(distanceValuesFromHokuyo);
+            }
             return distanceValuesFromHokuyo;
+        }
+
+        private bool ValidateData(int[] distanceValuesFromHokuyo)
+        {
+            int zeroNumberInData = 0;
+            foreach (int value in distanceValuesFromHokuyo)
+            {
+                if (value == 0)
+                {
+                    zeroNumberInData++;
+                }
+            }
+            if (zeroNumberInData == distanceValuesFromHokuyo.Length)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
     }
 }
