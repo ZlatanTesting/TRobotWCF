@@ -66,6 +66,7 @@ namespace TRobotWCFServiceLibrary.TRobotDrivers
         public String[] GetSharpsData()
         {
             string returnMessage = "";
+            CleanSerialPortBuffer();
 
             while(returnMessage.Length != 36 || !TryToParse(returnMessage))
             {
@@ -92,6 +93,7 @@ namespace TRobotWCFServiceLibrary.TRobotDrivers
         public String GetMobotData()
         {
             string returnMessage = "";
+            CleanSerialPortBuffer();
 
             while (returnMessage.Length != 36 || !TryToParse(returnMessage))
             {
@@ -119,6 +121,12 @@ namespace TRobotWCFServiceLibrary.TRobotDrivers
             {
                 return false;
             }
+        }
+
+        private void CleanSerialPortBuffer()
+        {
+            serialPort.DiscardInBuffer();
+            serialPort.DiscardOutBuffer();
         }
     }
 }

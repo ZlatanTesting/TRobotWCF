@@ -12,7 +12,6 @@
         Encoder,
         Temperature,
         Drive,
-        DriveInit,
         Null
     };
 }

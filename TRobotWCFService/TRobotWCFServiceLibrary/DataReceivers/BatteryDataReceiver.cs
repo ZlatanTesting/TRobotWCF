@@ -10,8 +10,6 @@ namespace TRobotWCFServiceLibrary.DataReceivers
     /// </summary>
     internal class BatteryDataReceiver : IDataReceiver
     {
-        private const int roboteQBaudRate = 115200;
-        private const string roboteQComPort = "COM9";
         private Roboteq roboteQ;
         private const string key = "charge";
         private const int uMin = 68;
@@ -20,9 +18,9 @@ namespace TRobotWCFServiceLibrary.DataReceivers
         /// <summary>
         /// Constructs a BatteryDataReceiver instance.
         /// </summary>
-        public BatteryDataReceiver()
+        public BatteryDataReceiver(Roboteq roboteQ)
         {
-            roboteQ = new Roboteq(roboteQComPort, roboteQBaudRate);
+            this.roboteQ = roboteQ;
         }
 
         /// <summary>
@@ -35,7 +33,6 @@ namespace TRobotWCFServiceLibrary.DataReceivers
             data.SelectedDeviceType = SelectedDevice.Battery;
             try
             {
-                roboteQ.Connect();
                 String response = roboteQ.GetBatteryVoltage();
 
                 int chargeInPercets = (int)(Double.Parse(response)-uMin)*100/(uMax-uMin);
@@ -55,10 +52,6 @@ namespace TRobotWCFServiceLibrary.DataReceivers
             catch (Exception e)
             {
                 Logger.Log(e);
-            }
-            finally
-            {
-                roboteQ.Disconnect();
             }
             return data;
         }

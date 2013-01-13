@@ -1,5 +1,6 @@
 ﻿using TRobotWCFServiceLibrary.DataReceivers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using TRobotWCFServiceLibrary.TRobotDrivers;
 
 namespace UnitTestsProject
 {
@@ -9,6 +10,23 @@ namespace UnitTestsProject
     [TestClass()]
     public class SharpSensorsDataReceiverTest
     {
+        private const int arduinoBaudRate = 9600;
+        private const string arduinoComPort = "COM11";
+        private Arduino arduino;
+
+        [TestInitialize()]
+        public void TestInitialize()
+        {
+            arduino = new Arduino(arduinoComPort, arduinoBaudRate);
+            arduino.Connect();
+        }
+
+        [TestCleanup()]
+        public void TestCleanup()
+        {
+            arduino.Disconnect();
+        }
+
         /// <summary>
         /// A test which tests if received value from first Sharp is not null.
         /// </summary>
@@ -16,7 +34,7 @@ namespace UnitTestsProject
         public void ReceiveDataFromFirstSharpTest()
         {
             //  Given
-            SharpSensorsDataReceiver sharpSensorsDataReceiver = new SharpSensorsDataReceiver();
+            SharpSensorsDataReceiver sharpSensorsDataReceiver = new SharpSensorsDataReceiver(arduino);
             string key = "distance1";
 
             //  When
@@ -33,7 +51,7 @@ namespace UnitTestsProject
         public void ReceiveDataFromSecondSharpTest()
         {
             //  Given
-            SharpSensorsDataReceiver sharpSensorsDataReceiver = new SharpSensorsDataReceiver();
+            SharpSensorsDataReceiver sharpSensorsDataReceiver = new SharpSensorsDataReceiver(arduino);
             string key = "distance2";
 
             //  When
@@ -50,7 +68,7 @@ namespace UnitTestsProject
         public void ReceiveDataFromThirdSharpTest()
         {
             //  Given
-            SharpSensorsDataReceiver sharpSensorsDataReceiver = new SharpSensorsDataReceiver();
+            SharpSensorsDataReceiver sharpSensorsDataReceiver = new SharpSensorsDataReceiver(arduino);
             string key = "distance3";
 
             //  When
@@ -67,7 +85,7 @@ namespace UnitTestsProject
         public void ReceiveDataFromFirstSharpIsBetween200And1500Or0Test()
         {
             //  Given
-            SharpSensorsDataReceiver sharpSensorsDataReceiver = new SharpSensorsDataReceiver();
+            SharpSensorsDataReceiver sharpSensorsDataReceiver = new SharpSensorsDataReceiver(arduino);
             string key = "distance1";
             int minValue = 200;
             int maxValue = 1500;
@@ -87,7 +105,7 @@ namespace UnitTestsProject
         public void ReceiveDataFromSecondSharpIsBetween200And1500Or0Test()
         {
             //  Given
-            SharpSensorsDataReceiver sharpSensorsDataReceiver = new SharpSensorsDataReceiver();
+            SharpSensorsDataReceiver sharpSensorsDataReceiver = new SharpSensorsDataReceiver(arduino);
             string key = "distance2";
             int minValue = 200;
             int maxValue = 1500;
@@ -107,7 +125,7 @@ namespace UnitTestsProject
         public void ReceiveDataFromThirdSharpIsBetween200And1500Or0Test()
         {
             //  Given
-            SharpSensorsDataReceiver sharpSensorsDataReceiver = new SharpSensorsDataReceiver();
+            SharpSensorsDataReceiver sharpSensorsDataReceiver = new SharpSensorsDataReceiver(arduino);
             string key = "distance3";
             int minValue = 200;
             int maxValue = 1500;
@@ -127,7 +145,7 @@ namespace UnitTestsProject
         public void SharpSensorsReceiveDataHasValidDeviceTypeTest()
         {
             //  Given 
-            SharpSensorsDataReceiver sharpSensorsDataReceiver = new SharpSensorsDataReceiver();
+            SharpSensorsDataReceiver sharpSensorsDataReceiver = new SharpSensorsDataReceiver(arduino);
             SelectedDevice expectedDataReceiver = SelectedDevice.Sharp;
 
             //  When

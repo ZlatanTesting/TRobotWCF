@@ -10,17 +10,15 @@ namespace TRobotWCFServiceLibrary.DataReceivers
     /// </summary>
     internal class SharpSensorsDataReceiver : IDataReceiver
     {
-        private const int arduinoBaudRate = 9600;
-        private const string arduinoComPort = "COM11";
         private Arduino arduino;
         private const string key = "distance";
 
         /// <summary>
         /// Constructs a SharpSensorsDataReceiver instance.
         /// </summary>
-        public SharpSensorsDataReceiver()
+        public SharpSensorsDataReceiver(Arduino arduino)
         {
-            arduino = new Arduino(arduinoComPort, arduinoBaudRate);
+            this.arduino = arduino;
         }
 
         /// <summary>
@@ -33,7 +31,6 @@ namespace TRobotWCFServiceLibrary.DataReceivers
             data.SelectedDeviceType = SelectedDevice.Sharp;
             try
             {
-                arduino.Connect();
                 String[] distances = arduino.GetSharpsData();
                 
                 for (int i = 1; i <= distances.Length; i++)
@@ -54,10 +51,6 @@ namespace TRobotWCFServiceLibrary.DataReceivers
             catch (Exception e)
             {
                 Logger.Log(e);
-            }
-            finally
-            {
-                arduino.Disconnect();
             }
             return data;
         }

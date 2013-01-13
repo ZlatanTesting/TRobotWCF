@@ -1,5 +1,6 @@
 ﻿using TRobotWCFServiceLibrary.DataReceivers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using TRobotWCFServiceLibrary.TRobotDrivers;
 
 namespace UnitTestsProject
 {
@@ -9,6 +10,7 @@ namespace UnitTestsProject
     [TestClass()]
     public class DataReceiverFactoryTest
     {
+        private DevicesManager devicesManager = new DevicesManager();
         /// <summary>
         /// A test which tests if got DataReceiver is BatteryDataReceiver.
         /// </summary>
@@ -16,7 +18,7 @@ namespace UnitTestsProject
         public void GetBatteryDataReceiverTest()
         {
             //  Given
-            DataReceiverFactory dataReceiverFactory = new DataReceiverFactory();
+            DataReceiverFactory dataReceiverFactory = new DataReceiverFactory(devicesManager);
             SelectedDevice dataReceiverType = SelectedDevice.Battery;
 
             //  When
@@ -33,7 +35,7 @@ namespace UnitTestsProject
         public void GetEncoderDataReceiverTest()
         {
             //  Given
-            DataReceiverFactory dataReceiverFactory = new DataReceiverFactory();
+            DataReceiverFactory dataReceiverFactory = new DataReceiverFactory(devicesManager);
             SelectedDevice dataReceiverType = SelectedDevice.Encoder;
 
             //  When
@@ -50,7 +52,7 @@ namespace UnitTestsProject
         public void GetHokuyoSensorDataReceiverTest()
         {
             //  Given
-            DataReceiverFactory dataReceiverFactory = new DataReceiverFactory();
+            DataReceiverFactory dataReceiverFactory = new DataReceiverFactory(devicesManager);
             SelectedDevice dataReceiverType = SelectedDevice.Hokuyo;
 
             //  When
@@ -67,7 +69,7 @@ namespace UnitTestsProject
         public void GetSharpSensorsDataReceiverTest()
         {
             //  Given
-            DataReceiverFactory dataReceiverFactory = new DataReceiverFactory();
+            DataReceiverFactory dataReceiverFactory = new DataReceiverFactory(devicesManager);
             SelectedDevice dataReceiverType = SelectedDevice.Sharp;
 
             //  When
@@ -84,7 +86,7 @@ namespace UnitTestsProject
         public void GetTemperatureDataReceiverTest()
         {
             //  Given
-            DataReceiverFactory dataReceiverFactory = new DataReceiverFactory();
+            DataReceiverFactory dataReceiverFactory = new DataReceiverFactory(devicesManager);
             SelectedDevice dataReceiverType = SelectedDevice.Temperature;
 
             //  When
@@ -101,7 +103,7 @@ namespace UnitTestsProject
         public void GetMobotSensorDataReceiverTest()
         {
             //  Given
-            DataReceiverFactory dataReceiverFactory = new DataReceiverFactory();
+            DataReceiverFactory dataReceiverFactory = new DataReceiverFactory(devicesManager);
             SelectedDevice dataReceiverType = SelectedDevice.Mobot;
 
             //  When
@@ -118,7 +120,7 @@ namespace UnitTestsProject
         public void GetNullDataReceiverTest()
         {
             //  Given
-            DataReceiverFactory dataReceiverFactory = new DataReceiverFactory();
+            DataReceiverFactory dataReceiverFactory = new DataReceiverFactory(devicesManager);
             SelectedDevice dataReceiverType = SelectedDevice.Drive;
 
             //  When

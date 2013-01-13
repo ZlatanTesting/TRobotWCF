@@ -1,5 +1,6 @@
 ﻿using TRobotWCFServiceLibrary.DataReceivers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using TRobotWCFServiceLibrary.TRobotDrivers;
 
 namespace UnitTestsProject
 {
@@ -9,6 +10,23 @@ namespace UnitTestsProject
     [TestClass]
     public class BatteryDataReceiverTest
     {
+        private const int roboteQBaudRate = 115200;
+        private const string roboteQComPort = "COM9";
+        private Roboteq roboteQ;
+
+        [TestInitialize()]
+        public void TestInitialize()
+        {
+            roboteQ = new Roboteq(roboteQComPort, roboteQBaudRate);
+            roboteQ.Connect();
+        }
+
+        [TestCleanup()]
+        public void TestCleanup()
+        {
+            roboteQ.Disconnect();
+        }
+
         /// <summary>
         /// A test which tests if received value is not null.
         /// </summary>
@@ -16,7 +34,7 @@ namespace UnitTestsProject
         public void BatteryReceiveDataIsNotNullTest()
         {
             //  Given
-            BatteryDataReceiver batteryDataReceiver = new BatteryDataReceiver();
+            BatteryDataReceiver batteryDataReceiver = new BatteryDataReceiver(roboteQ);
             string key = "charge";
 
             //  When
@@ -33,7 +51,7 @@ namespace UnitTestsProject
         public void BatteryReceiveDataBetween0And100Test()
         {
             //  Given 
-            BatteryDataReceiver batteryDataReceiver = new BatteryDataReceiver();
+            BatteryDataReceiver batteryDataReceiver = new BatteryDataReceiver(roboteQ);
             string key = "charge";
             int minValue = 0;
             int maxValue = 100;
@@ -52,7 +70,7 @@ namespace UnitTestsProject
         public void BatteryReceiveDataHasValidDeviceTypeTest()
         {
             //  Given 
-            BatteryDataReceiver batteryDataReceiver = new BatteryDataReceiver();
+            BatteryDataReceiver batteryDataReceiver = new BatteryDataReceiver(roboteQ);
             SelectedDevice expectedDataReceiver = SelectedDevice.Battery;
 
             //  When

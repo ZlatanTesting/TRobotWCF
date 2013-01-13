@@ -10,8 +10,6 @@ namespace TRobotWCFServiceLibrary.DataReceivers
     /// </summary>
     internal class EncoderDataReceiver : IDataReceiver
     {
-        private const int roboteQBaudRate = 115200;
-        private const string roboteQComPort = "COM9";
         private Roboteq roboteQ;
         private const double wheelCircuitInKm = 0.00038;
         private const double hoursInMinute = 1.0/60;
@@ -20,9 +18,9 @@ namespace TRobotWCFServiceLibrary.DataReceivers
         /// <summary>
         /// Constructs a EncoderDataReceiver instance.
         /// </summary>
-        public EncoderDataReceiver()
+        public EncoderDataReceiver(Roboteq roboteQ)
         {
-            roboteQ = new Roboteq(roboteQComPort, roboteQBaudRate);
+            this.roboteQ = roboteQ;
         }
 
         /// <summary>
@@ -35,7 +33,6 @@ namespace TRobotWCFServiceLibrary.DataReceivers
             data.SelectedDeviceType = SelectedDevice.Encoder;
             try
             {
-                roboteQ.Connect();
                 String[] response = roboteQ.GetSpeed();
 
                 double velocity = ((double.Parse(response[0]) + Double.Parse(response[1])) / 2) * (wheelCircuitInKm / hoursInMinute);
@@ -44,10 +41,6 @@ namespace TRobotWCFServiceLibrary.DataReceivers
             catch (Exception e)
             {
                 //Logger.Log(e);
-            }
-            finally
-            {
-                roboteQ.Disconnect();
             }
             return data;
         }

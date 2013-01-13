@@ -10,17 +10,15 @@ namespace TRobotWCFServiceLibrary.DataReceivers
     /// </summary>
     internal class TemperatureDataReceiver : IDataReceiver
     {
-        private const int roboteQBaudRate = 115200;
-        private const string roboteQComPort = "COM9";
         private Roboteq roboteQ;
         private const string key = "temperature";
 
         /// <summary>
         /// Constructs a TemperatureDataReceiver instance.
         /// </summary>
-        public TemperatureDataReceiver()
+        public TemperatureDataReceiver(Roboteq roboteQ)
         {
-            roboteQ = new Roboteq(roboteQComPort, roboteQBaudRate);
+            this.roboteQ = roboteQ;
         }
 
         /// <summary>
@@ -33,7 +31,6 @@ namespace TRobotWCFServiceLibrary.DataReceivers
             data.SelectedDeviceType = SelectedDevice.Temperature;
             try
             {
-                roboteQ.Connect();
                 int degreesC = int.Parse(roboteQ.GetTemperature());
 
                 data.Dictionary.Add(key, degreesC);
@@ -41,10 +38,6 @@ namespace TRobotWCFServiceLibrary.DataReceivers
             catch (Exception e)
             {
                 Logger.Log(e);
-            }
-            finally
-            {
-                roboteQ.Disconnect();
             }
             return data;
         }

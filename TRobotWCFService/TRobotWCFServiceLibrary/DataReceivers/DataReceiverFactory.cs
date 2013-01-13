@@ -1,6 +1,7 @@
 ﻿using System;
 using TRobotWCFServiceLibrary.Utils;
 using TRobotWCFServiceLibrary.DataProvider;
+using TRobotWCFServiceLibrary.TRobotDrivers;
 
 namespace TRobotWCFServiceLibrary.DataReceivers
 {
@@ -9,6 +10,16 @@ namespace TRobotWCFServiceLibrary.DataReceivers
     /// </summary>
     internal class DataReceiverFactory
     {
+        private DevicesManager devicesManager;
+
+        /// <summary>
+        /// Constructs a Service1 instance.
+        /// </summary>
+        public DataReceiverFactory(DevicesManager devicesManager)
+        {
+            this.devicesManager = devicesManager;
+        }
+
         /// <summary>
         /// Factory method which returns IDataReceiver for selected device.
         /// </summary>
@@ -20,27 +31,27 @@ namespace TRobotWCFServiceLibrary.DataReceivers
             {
                 case SelectedDevice.Battery:
                 {
-                    return new BatteryDataReceiver();
+                    return new BatteryDataReceiver(devicesManager.RoboteQ);
                 }
                 case SelectedDevice.Hokuyo:
                 {
-                    return new HokuyoSensorDataReceiver();
+                    return new HokuyoSensorDataReceiver(devicesManager.Hokuyo);
                 }
                 case SelectedDevice.Sharp:
                 {
-                    return new SharpSensorsDataReceiver();
+                    return new SharpSensorsDataReceiver(devicesManager.Arduino);
                 }
                 case SelectedDevice.Mobot:
                 {
-                    return new MobotSensorDataReceiver();
+                    return new MobotSensorDataReceiver(devicesManager.Arduino);
                 }
                 case SelectedDevice.Encoder:
                 {
-                    return new EncoderDataReceiver();
+                    return new EncoderDataReceiver(devicesManager.RoboteQ);
                 }
                 case SelectedDevice.Temperature:
                 {
-                    return new TemperatureDataReceiver();
+                    return new TemperatureDataReceiver(devicesManager.RoboteQ);
                 }
                 default:
                 {

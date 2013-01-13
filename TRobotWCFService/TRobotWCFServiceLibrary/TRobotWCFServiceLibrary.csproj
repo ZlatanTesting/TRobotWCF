@@ -46,7 +46,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataProvider\DriveInitializeDataProvider.cs" />
     <Compile Include="DataProvider\EncoderDataProvider.cs" />
     <Compile Include="DataProvider\IDataProvider.cs" />
     <Compile Include="DataReceivers\BatteryDataReceiver.cs" />
@@ -64,6 +63,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service1.cs" />
     <Compile Include="TRobotDrivers\Arduino.cs" />
+    <Compile Include="TRobotDrivers\DevicesManager.cs" />
     <Compile Include="TRobotDrivers\Hokuyo.cs" />
     <Compile Include="TRobotDrivers\Roboteq.cs" />
     <Compile Include="Utils\Logger.cs" />

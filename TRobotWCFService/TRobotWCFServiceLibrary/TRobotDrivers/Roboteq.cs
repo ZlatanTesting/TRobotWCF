@@ -54,6 +54,8 @@ namespace TRobotWCFServiceLibrary.TRobotDrivers
                 {
                     serialPort.Open();
                     counter = 3;
+                    CleanSerialPortBuffer();
+                    DriveInit();
                 }
                 catch (Exception e)
                 {
@@ -173,7 +175,7 @@ namespace TRobotWCFServiceLibrary.TRobotDrivers
                 string temp = Convert.ToString(argument);
                 command += (" " + temp);
             }
-            serialPort.DiscardInBuffer();
+            CleanSerialPortBuffer();
             serialPort.WriteLine(command);
 
             if ((opType == WriteOperationType.RuntimeQuery) || (opType == WriteOperationType.GetConfig))
@@ -245,10 +247,13 @@ namespace TRobotWCFServiceLibrary.TRobotDrivers
             return WriteOperation(opType, commandName, args);
         }
 
-        /// <summary>
-        /// Initializes encoders.
-        /// </summary>
-        public void DriveInit()
+        private void CleanSerialPortBuffer()
+        {
+            serialPort.DiscardInBuffer();
+            serialPort.DiscardOutBuffer();
+        }
+
+        private void DriveInit()
         {
             //  All motors in open-loop speed - default
             WriteOperation(WriteOperationType.SetConfig, "MMOD", 1, 0);

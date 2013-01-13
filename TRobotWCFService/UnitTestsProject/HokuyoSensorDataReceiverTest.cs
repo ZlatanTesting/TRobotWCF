@@ -1,5 +1,6 @@
 ﻿using TRobotWCFServiceLibrary.DataReceivers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using TRobotWCFServiceLibrary.TRobotDrivers;
 
 namespace UnitTestsProject
 {
@@ -9,6 +10,23 @@ namespace UnitTestsProject
     [TestClass]
     public class HokuyoSensorDataReceiverTest
     {
+        private const int hokuyoBaudRate = 19200;
+        private const int hokuyoComPort = 8;
+        private Hokuyo hokuyo;
+
+        [TestInitialize()]
+        public void TestInitialize()
+        {
+            hokuyo = new Hokuyo(hokuyoComPort, hokuyoBaudRate);
+            hokuyo.Connect();
+        }
+
+        [TestCleanup()]
+        public void TestCleanup()
+        {
+            hokuyo.Disconnect();
+        }
+
         /// <summary>
         /// A test which tests if received value on zero index is not null.
         /// </summary>
@@ -16,7 +34,7 @@ namespace UnitTestsProject
         public void HokuyoReceiveDataOnZeroIndexIsNotNullTest()
         {
             //  Given
-            HokuyoSensorDataReceiver hokuyoSensorDataReceiver = new HokuyoSensorDataReceiver();
+            HokuyoSensorDataReceiver hokuyoSensorDataReceiver = new HokuyoSensorDataReceiver(hokuyo);
             string key = "distance0";
 
             //  When
@@ -33,7 +51,7 @@ namespace UnitTestsProject
         public void HokuyoReceiveDataOn341stIndexIsNotNullTest()
         {
             //  Given
-            HokuyoSensorDataReceiver hokuyoSensorDataReceiver = new HokuyoSensorDataReceiver();
+            HokuyoSensorDataReceiver hokuyoSensorDataReceiver = new HokuyoSensorDataReceiver(hokuyo);
             string key = "distance341";
 
             //  When
@@ -50,7 +68,7 @@ namespace UnitTestsProject
         public void HokuyoReceiveDataOn681stIndexIsNotNullTest()
         {
             //  Given
-            HokuyoSensorDataReceiver hokuyoSensorDataReceiver = new HokuyoSensorDataReceiver();
+            HokuyoSensorDataReceiver hokuyoSensorDataReceiver = new HokuyoSensorDataReceiver(hokuyo);
             string key = "distance681";
 
             //  When
@@ -67,7 +85,7 @@ namespace UnitTestsProject
         public void HokuyoValidCapacityOfReceivedDataTest()
         {
             //  Given
-            HokuyoSensorDataReceiver hokuyoSensorDataReceiver = new HokuyoSensorDataReceiver();
+            HokuyoSensorDataReceiver hokuyoSensorDataReceiver = new HokuyoSensorDataReceiver(hokuyo);
             int expectedCapacityOfReceivedData = 682;
 
             //  When
@@ -84,7 +102,7 @@ namespace UnitTestsProject
         public void HokuyoSensorsReceiveDataHasValidDeviceTypeTest()
         {
             //  Given 
-            HokuyoSensorDataReceiver hokuyoSensorDataReceiver = new HokuyoSensorDataReceiver();
+            HokuyoSensorDataReceiver hokuyoSensorDataReceiver = new HokuyoSensorDataReceiver(hokuyo);
             SelectedDevice expectedDataReceiver = SelectedDevice.Hokuyo;
 
             //  When

@@ -1,5 +1,6 @@
 ﻿using TRobotWCFServiceLibrary.DataReceivers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using TRobotWCFServiceLibrary.TRobotDrivers;
 
 namespace UnitTestsProject
 {
@@ -9,6 +10,23 @@ namespace UnitTestsProject
     [TestClass]
     public class EncoderDataReceiverTest
     {
+        private const int roboteQBaudRate = 115200;
+        private const string roboteQComPort = "COM9";
+        private Roboteq roboteQ;
+
+        [TestInitialize()]
+        public void TestInitialize()
+        {
+            roboteQ = new Roboteq(roboteQComPort, roboteQBaudRate);
+            roboteQ.Connect();
+        }
+
+        [TestCleanup()]
+        public void TestCleanup()
+        {
+            roboteQ.Disconnect();
+        }
+
         /// <summary>
         /// A test which tests if received value is not null.
         /// </summary>
@@ -16,7 +34,7 @@ namespace UnitTestsProject
         public void EncoderReceiveDataIsNotNullTest()
         {
             //  Given
-            EncoderDataReceiver ecoderDataReceiver = new EncoderDataReceiver();
+            EncoderDataReceiver ecoderDataReceiver = new EncoderDataReceiver(roboteQ);
             string key = "speed";
 
             //  When
@@ -33,7 +51,7 @@ namespace UnitTestsProject
         public void EncoderReceiveDataHasValidDeviceTypeTest()
         {
             //  Given 
-            EncoderDataReceiver ecoderDataReceiver = new EncoderDataReceiver();
+            EncoderDataReceiver ecoderDataReceiver = new EncoderDataReceiver(roboteQ);
             SelectedDevice expectedDataReceiver = SelectedDevice.Encoder;
 
             //  When
