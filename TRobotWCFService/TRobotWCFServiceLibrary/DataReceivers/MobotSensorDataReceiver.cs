@@ -16,6 +16,7 @@ namespace TRobotWCFServiceLibrary.DataReceivers
         /// <summary>
         /// Constructs a HokuyoSensorDataReceiver instance.
         /// </summary>
+        /// /// <param name="arduino">Singleton istance of Arduino supporter.</param>
         public MobotSensorDataReceiver(Arduino arduino)
         {
             this.arduino = arduino;

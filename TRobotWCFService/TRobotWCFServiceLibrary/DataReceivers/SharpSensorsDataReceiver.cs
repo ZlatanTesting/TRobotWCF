@@ -16,6 +16,7 @@ namespace TRobotWCFServiceLibrary.DataReceivers
         /// <summary>
         /// Constructs a SharpSensorsDataReceiver instance.
         /// </summary>
+        /// /// <param name="arduino">Singleton istance of Arduino supporter.</param>
         public SharpSensorsDataReceiver(Arduino arduino)
         {
             this.arduino = arduino;

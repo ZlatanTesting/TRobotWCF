@@ -17,7 +17,8 @@ namespace TRobotWCFServiceLibrary.DataProvider
         /// Constructs a EncoderDataProvider instance.
         /// </summary>
         /// <param name="driversData">Data object with information about left and right wheel power. It must be in the Dictionary wiht keys: "leftWheelPower" and "rightWheelPower".</param>
-        public EncoderDataProvider(Data driversData, Roboteq roboteQ) 
+        /// <param name="roboteQ">Singleton istance of RoboteQ supporter.</param>
+        public EncoderDataProvider(Data driversData, Roboteq roboteQ)
         {
             this.driversData = driversData;
             this.roboteQ = roboteQ;

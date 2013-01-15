@@ -5,6 +5,9 @@ using System.Text;
 
 namespace TRobotWCFServiceLibrary.TRobotDrivers
 {
+    /// <summary>
+    /// Manage devices.
+    /// </summary>
     class DevicesManager
     {
         private const int arduinoBaudRate = 9600;
@@ -17,6 +20,9 @@ namespace TRobotWCFServiceLibrary.TRobotDrivers
         private const int hokuyoComPort = 8;
         private Hokuyo hokuyo;
 
+        /// <summary>
+        /// Constructs a DevicesManager instance.
+        /// </summary>
         public DevicesManager()
         {
             hokuyo = new Hokuyo(hokuyoComPort, hokuyoBaudRate);
@@ -24,6 +30,9 @@ namespace TRobotWCFServiceLibrary.TRobotDrivers
             arduino = new Arduino(arduinoComPort, arduinoBaudRate);
         }
 
+        /// <summary>
+        /// Connects to all devices.
+        /// </summary>
         public void ConnectAllDevices()
         {
             hokuyo.Connect();
@@ -31,6 +40,9 @@ namespace TRobotWCFServiceLibrary.TRobotDrivers
             arduino.Connect();
         }
 
+        /// <summary>
+        /// Gets Arduino supporter.
+        /// </summary>
         public Arduino Arduino
         {
             get
@@ -39,6 +51,9 @@ namespace TRobotWCFServiceLibrary.TRobotDrivers
             }
         }
 
+        /// <summary>
+        /// Gets RoboteQ supporter.
+        /// </summary>
         public Roboteq RoboteQ
         {
             get
@@ -47,6 +62,9 @@ namespace TRobotWCFServiceLibrary.TRobotDrivers
             }
         }
 
+        /// <summary>
+        /// Gets Hokuyo supporter.
+        /// </summary>
         public Hokuyo Hokuyo
         {
             get

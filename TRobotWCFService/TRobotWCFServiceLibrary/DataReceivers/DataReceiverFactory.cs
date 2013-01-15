@@ -15,6 +15,7 @@ namespace TRobotWCFServiceLibrary.DataReceivers
         /// <summary>
         /// Constructs a Service1 instance.
         /// </summary>
+        /// <param name="devicesManager">Singleton istance of devices manager.</param>
         public DataReceiverFactory(DevicesManager devicesManager)
         {
             this.devicesManager = devicesManager;

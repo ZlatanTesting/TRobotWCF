@@ -16,6 +16,7 @@ namespace TRobotWCFServiceLibrary.DataReceivers
         /// <summary>
         /// Constructs a TemperatureDataReceiver instance.
         /// </summary>
+        /// /// <param name="roboteQ">Singleton istance of RoboteQ supporter.</param>
         public TemperatureDataReceiver(Roboteq roboteQ)
         {
             this.roboteQ = roboteQ;

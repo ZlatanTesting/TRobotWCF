@@ -18,6 +18,7 @@ namespace TRobotWCFServiceLibrary.DataReceivers
         /// <summary>
         /// Constructs a EncoderDataReceiver instance.
         /// </summary>
+        /// <param name="roboteQ">Singleton istance of RoboteQ supporter.</param>
         public EncoderDataReceiver(Roboteq roboteQ)
         {
             this.roboteQ = roboteQ;

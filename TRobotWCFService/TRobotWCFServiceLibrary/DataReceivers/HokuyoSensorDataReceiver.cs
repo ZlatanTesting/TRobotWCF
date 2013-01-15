@@ -17,6 +17,7 @@ namespace TRobotWCFServiceLibrary.DataReceivers
         /// <summary>
         /// Constructs a HokuyoSensorDataReceiver instance.
         /// </summary>
+        /// <param name="hokuyo">Singleton istance of RoboteQ supporter.</param>
         public HokuyoSensorDataReceiver(Hokuyo hokuyo)
         {
             this.hokuyo = hokuyo;

@@ -18,6 +18,7 @@ namespace TRobotWCFServiceLibrary.DataReceivers
         /// <summary>
         /// Constructs a BatteryDataReceiver instance.
         /// </summary>
+        /// <param name="roboteQ">Singleton istance of RoboteQ supporter.</param>
         public BatteryDataReceiver(Roboteq roboteQ)
         {
             this.roboteQ = roboteQ;
